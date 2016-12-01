@@ -1,0 +1,23 @@
+<resources>
+
+    <string name="app_name">"TSBridge"</string>
+    <string name="action_settings">"Settings"</string>
+
+    <string name="hello_world">"Hello World!"</string>
+
+    <string-array name="title_array">
+        <item>"公告"</item>
+        <item>"发布"</item>
+    </string-array>
+
+    <string name="send_name">"输入您的名称: "</string>
+    <string name="send_name_hint">"名称..."</string>
+    <string name="send_time">"当前时间: "</string>
+    <string name="send_time_hint">"时间...."</string>
+    <string name="send_content">"输入文字内容: "</string>
+    <string name="send_content_hint">"内容..."</string>
+    <string name="send_image_sel">"选择图片内容"</string>
+    <string name="send_image_del">"清除"</string>
+    <string name="send_btn">"发布"</string>
+
+</resources>

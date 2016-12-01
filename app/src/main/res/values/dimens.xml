@@ -1,0 +1,29 @@
+<resources>
+
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+
+    <dimen name="tablayout_height">40dp</dimen>
+
+    <dimen name="bulletin_padding">15dp</dimen>
+    <dimen name="bulletin_image">48dp</dimen>
+    <dimen name="bulletin_name">20dp</dimen>
+    <dimen name="bulletin_time">12dp</dimen>
+    <dimen name="bulletin_content">16dp</dimen>
+    <dimen name="image_name">10dp</dimen>
+    <dimen name="name_time">5dp</dimen>
+    <dimen name="image_content">15dp</dimen>
+    <dimen name="bulletin_content_image">48dp</dimen>
+    <dimen name="bulletin_divider">1dp</dimen>
+
+    <dimen name="send_image_width">200dp</dimen>
+    <dimen name="send_item_margin">20dp</dimen>
+    <dimen name="send_padding">30dp</dimen>
+    <dimen name="send_title">20dp</dimen>
+    <dimen name="send_content">16dp</dimen>
+    <dimen name="send_image">100dp</dimen>
+    <dimen name="btn_image">10dp</dimen>
+
+</resources>

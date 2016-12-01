@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="transparent">#00000000</color>
+
+    <color name="primary">#FF5BBD72</color>
+    <color name="primaryDark">#FF22BD72</color>
+    <color name="accent">#FF22BD72</color>
+
+    <color name="tabbarText">#FFFFFFFF</color>
+
+    <color name="tablayoutBg">#FFE0E0E0</color>
+    <color name="tablayoutCursor">#FF5BBD72</color>
+    <color name="tablayoutSelected">#FF000000</color>
+    <color name="tablayoutNormal">#8A000000</color>
+
+    <color name="bulletin_bg">#FFFFFFFF</color>
+    <color name="bulletin_name">#FF000000</color>
+    <color name="bulletin_time">#CC000000</color>
+    <color name="bulletin_content">#FF000000</color>
+
+    <color name="bulletin_divider">#FF5BBD72</color>
+
+    <color name="send_bg">#FFFFFFFF</color>
+    <color name="send_title">#FF000000</color>
+    <color name="send_content">#8A000000</color>
+
+</resources>
