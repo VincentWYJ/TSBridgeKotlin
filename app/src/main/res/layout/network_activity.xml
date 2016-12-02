@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:tools="http://schemas.android.com/tools"
+	android:layout_width="match_parent"
+	android:layout_height="match_parent"
+	android:gravity="center"
+	android:background="#FFFFFFFF">
+		
+	<TextView
+		android:id="@+id/network_title"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:textColor="#FF000000"
+		android:text="@string/network_title"
+		android:textSize="20sp" />
+
+	<TextView
+		android:id="@+id/network_explain"
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:layout_below="@id/network_title"
+		android:layout_margin="20dp"
+		android:textColor="#FF666666"
+		android:text="@string/network_explain"
+		android:textSize="15sp" />
+
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:layout_centerHorizontal="true"
+		android:layout_below="@id/network_explain"
+		android:layout_marginTop="40dp"
+		android:orientation="horizontal" >
+
+		<Button
+			android:id="@+id/network_mobile_button"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:text="@string/network_mobile_button_text"
+			 android:textColor="#FF000000"
+			android:textSize="20sp" />
+
+		<Button
+			android:id="@+id/network_wifi_button"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginStart="20dp"
+			android:text="@string/network_wifi_button_text"
+			android:textColor="#FF000000"
+			android:textSize="20sp" />
+
+	</LinearLayout>
+	
+</RelativeLayout>

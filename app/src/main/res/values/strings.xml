@@ -20,4 +20,26 @@
     <string name="send_image_del">"清除"</string>
     <string name="send_btn">"发布"</string>
 
+    <string name="no_selected_image">"没有选择图片"</string>
+    <string name="no_connected_network">""网络未连接成功""</string>
+    <string name="no_inputted_content">"请输入名称和内容(文字或图片)"</string>
+    <string name="send_succeed">"公告发布成功"</string>
+
+    <string name="network_title">"网络连接提示"</string>
+    <string name="network_explain">"设备没有连接网络，请点击下面按钮进行相应网络的连接设置。"</string>
+    <string name="network_mobile_button_text">"移动网络"</string>
+    <string name="network_wifi_button_text">"无线网络"</string>
+
+    <string name="permission_external_storage_title">"不能获取外部存储设备"</string>
+    <string name="permission_external_storage_explain">"外部存储设备权限未打开，不能读取图片文件"</string>
+
+    <string name="permission_camera_title">"不能获取相机"</string>
+    <string name="permission_camera_explain_mirror">"相机权限未打开，不能进行拍照"</string>
+
+    <string name="permission_button_text">"去设置权限"</string>
+    <string name="permission_denied">"拒绝了权限申请"</string>
+
+    <string name="confirm">"确认"</string>
+    <string name="cancel">"取消"</string>
+
 </resources>

@@ -13,9 +13,8 @@ import com.tsbridge.utils.Utils
  */
 class ReceiveBulletin(val teacherName: String,
                       val teacherTime: String,
-               val bulletinContent: String?,
-               val bulletinImage: String?)
-                : BmobObject() {
+                      val bulletinContent: String?,
+                      val bulletinImage: String?): BmobObject() {
     init {
         Utils.showLog("Create a ReceiveBulletin object")
     }

@@ -21,9 +21,8 @@ allprojects {
         options.encoding = "UTF-8"
     }
     tasks.whenTaskAdded { task ->
-        if (task.name.contains('AndroidTest') || task.name.contains('Test')) {
+        if (task.name.contains('AndroidTest') || task.name.contains('Test'))
             task.enabled = false
-        }
     }
 }
 

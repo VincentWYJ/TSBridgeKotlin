@@ -14,22 +14,24 @@ import com.tsbridge.R
 import com.tsbridge.entity.ReceiveBulletin
 import com.tsbridge.fragment.SendFragment
 import com.tsbridge.utils.Utils
-import kotlinx.android.synthetic.main.bulletin_image.view.*
 import kotlinx.android.synthetic.main.bulletin_item.view.*
+import org.jetbrains.anko.imageBitmap
+import org.jetbrains.anko.imageView
+import org.jetbrains.anko.linearLayout
+import org.jetbrains.anko.onClick
 import java.io.File
 
 class BulletinAdapter(private val mContext: Context,
                       private val mBulletins: List<ReceiveBulletin>?)
-                        : RecyclerView.Adapter<BulletinAdapter.ViewHolder>() {
+        : RecyclerView.Adapter<BulletinAdapter.ViewHolder>() {
     init {
         Utils.showLog("Create a BulletinAdapter object")
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val bulletinItem = LayoutInflater.from(mContext).inflate(R.layout.bulletin_item, parent, false)
-
+        val bulletinItem = LayoutInflater.from(mContext)
+                .inflate(R.layout.bulletin_item, parent, false)
         val viewHolder = ViewHolder(bulletinItem)
-
         return viewHolder
     }
 
@@ -41,7 +43,7 @@ class BulletinAdapter(private val mContext: Context,
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         init {
-            itemView.bulletin_content_image.setOnClickListener {
+            itemView.bulletin_content_image.onClick {
                 showFullImage()
             }
         }
@@ -58,22 +60,21 @@ class BulletinAdapter(private val mContext: Context,
 
         private fun showFullImage() {
             val dialog = Dialog(mContext, R.style.DialogTitle)
-            var view = LayoutInflater.from(mContext).inflate(R.layout.bulletin_image, null)
-            dialog.setContentView(view)
-            dialog.setCanceledOnTouchOutside(true)
-            val imageView = view.bulletin_image_full
-            imageView.setImageBitmap(BitmapFactory.decodeFile(SendFragment.picturePath))
-            /** 点击图片是自身消失 */
-            imageView.setOnClickListener {
-                dialog.dismiss()
-            }
+            dialog.setContentView(mContext.linearLayout {
+                imageView {
+                    imageBitmap = BitmapFactory.decodeFile(SendFragment.picturePath)
+                    onClick {
+                        dialog.dismiss()
+                    }
+                }
+            })
 
             dialog.show()
         }
     }
 
-    private inner class QueryImageTask(val mBulletinImage: ImageView?): AsyncTask<String, Void, File>() {
-
+    private inner class QueryImageTask(val mBulletinImage: ImageView?)
+            : AsyncTask<String, Void, File>() {
         override fun doInBackground(vararg params: String): File? {
             val imageUrl = params[0]
             val imageSize = mContext.resources.getDimensionPixelSize(R.dimen.bulletin_image)
@@ -82,13 +83,11 @@ class BulletinAdapter(private val mContext: Context,
             } catch (ex: Exception) {
                 return null
             }
-
         }
 
         override fun onPostExecute(result: File?) {
             if (result == null) {
                 Glide.with(mContext).load(R.drawable.bulletin_image).into(mBulletinImage)
-
                 return
             }
             Glide.with(mContext).load(result).into(mBulletinImage)

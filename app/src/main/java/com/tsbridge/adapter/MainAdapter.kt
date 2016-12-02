@@ -14,7 +14,7 @@ import com.tsbridge.utils.Utils
 class MainAdapter(mFragmentManager: FragmentManager,
                   private val mTabNames: Array<String>?,
                   private val mFragments: List<Fragment>?)
-                   : FragmentStatePagerAdapter(mFragmentManager) {
+        : FragmentStatePagerAdapter(mFragmentManager) {
     init {
         Utils.showLog("Create a MainAdapter object")
     }

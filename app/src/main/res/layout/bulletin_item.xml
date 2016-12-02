@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/bulletin_bg"
+    android:background="@color/bulletinBg"
     android:elevation="5dp"
     android:padding="@dimen/bulletin_padding">
 
@@ -17,7 +17,7 @@
         android:layout_alignTop="@id/bulletin_image"
         android:layout_marginStart="@dimen/image_name"
         android:textSize="@dimen/bulletin_name"
-        android:textColor="@color/bulletin_name" />
+        android:textColor="@color/bulletinName" />
 
     <TextView android:id="@+id/bulletin_time"
         android:layout_width="wrap_content"
@@ -26,7 +26,7 @@
         android:layout_alignBottom="@id/bulletin_image"
         android:layout_marginTop="@dimen/name_time"
         android:textSize="@dimen/bulletin_time"
-        android:textColor="@color/bulletin_time" />
+        android:textColor="@color/bulletinTime" />
 
     <ImageView android:id="@+id/bulletin_content_image"
         android:layout_width="@dimen/bulletin_content_image"
@@ -41,7 +41,7 @@
         android:layout_below="@id/bulletin_image"
         android:layout_marginTop="@dimen/image_content"
         android:textSize="@dimen/bulletin_content"
-        android:textColor="@color/bulletin_content" />
+        android:textColor="@color/bulletinContent" />
 
     <View
         android:id="@+id/bulletin_divider"
@@ -49,6 +49,6 @@
         android:layout_height="@dimen/bulletin_divider"
         android:layout_below="@id/bulletin_content"
         android:layout_marginTop="@dimen/name_time"
-        android:background="@color/bulletin_divider" />
+        android:background="@color/bulletinDivider" />
 
 </RelativeLayout>
