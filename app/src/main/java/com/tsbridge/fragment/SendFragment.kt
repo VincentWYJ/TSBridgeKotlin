@@ -26,25 +26,14 @@ import kotlinx.android.synthetic.main.send_fragment.view.*
 import java.io.File
 
 class SendFragment: Fragment(), View.OnClickListener {
-    /**
-     * 网上说 Kotlin 有 platformStatic 关键字模拟 Java static
-     * public platformStatic val NUMBER : Int = 1
-     * 虽然目前没有找到，不过下面这种方式已经能满足需求了
-     * SendFragment.Companion.getPicturePath()
-     * 注：companion 类型变量一般在需对其他类公开成员时使用
-     */
-    companion object {
-        var picturePath: String? = null
-    }
-
     private val SELECT_PIC_LOW = 121
     private val SELECT_PIC_KITKAT = 122
 
     private var mContext: Context? = null
 
-    private var sendName: String? = null
-    private var sendContent: String? = null
-    private var sendImageUri: Uri? = null
+    private var mSendName: String? = null
+    private var mSendContent: String? = null
+    private var mSendImageUri: Uri? = null
 
     private var mRootView: View? = null
 
@@ -170,9 +159,9 @@ class SendFragment: Fragment(), View.OnClickListener {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 SELECT_PIC_KITKAT, SELECT_PIC_LOW -> {
-                    sendImageUri = intent!!.data
-                    if (sendImageUri != null)
-                        imagePreview(sendImageUri!!)
+                    mSendImageUri = intent!!.data
+                    if (mSendImageUri != null)
+                        imagePreview(mSendImageUri!!)
                     else
                         Utils.showLog("Uri with returned intent is null")
                 }
@@ -185,15 +174,14 @@ class SendFragment: Fragment(), View.OnClickListener {
     }
 
     private fun imagePreview(uri: Uri) {
-        picturePath = Utils.getPath(mContext!!, uri)
+        var picturePath = Utils.getPath(mContext!!, uri)
         Utils.showLog(picturePath!!)
         Glide.with(mContext).load(picturePath).into(mRootView!!.send_image)
     }
 
     private fun clearImage() {
-        if (sendImageUri != null) {
-            sendImageUri = null
-            picturePath = null
+        if (mSendImageUri != null) {
+            mSendImageUri = null
             mRootView!!.send_image.setImageResource(R.drawable.black)
         }
     }
@@ -238,22 +226,26 @@ class SendFragment: Fragment(), View.OnClickListener {
     }
 
     private fun insertItem() {
-        sendName = mRootView!!.send_name.text.toString()
-        sendContent = mRootView!!.send_content.text.toString()
-        if (TextUtils.isEmpty(sendName) ||
-                (TextUtils.isEmpty(sendContent) && sendImageUri == null)) {
+        mSendName = mRootView!!.send_name.text.toString()
+        mSendContent = mRootView!!.send_content.text.toString()
+        if (TextUtils.isEmpty(mSendName) ||
+                (TextUtils.isEmpty(mSendContent) && mSendImageUri == null)) {
             Utils.showToast(mContext!!, mContext!!.getString(R.string.no_inputted_content))
             return
         }
-        if (picturePath != null) {
-            val file = BmobFile(File(picturePath))
+        if (mSendImageUri != null) {
+            /** 获取路径一定要用 Utils 中定义的方法，如果使用 uri.path 不同 SDK 结果不同 */
+            val file = BmobFile(File(Utils.getPath(mContext!!, mSendImageUri!!)))
             file.uploadblock(object : UploadFileListener() {
                 override fun done(e: BmobException?) {
-                    if (e == null)
+                    if (e == null) {
                         Utils.showLog("Upload image succeed")
-                    else
-                        Utils.showLog("Upload image failed：" + e.message + "," + e.errorCode)
-                    insertItemToBulletin(file)
+                        insertItemToBulletin(file)
+                    } else {
+                        Utils.showLog("Upload image failed: " + e.message + " Error code: " + e.errorCode)
+                        Utils.showToast(mContext!!,
+                                mContext!!.getString(R.string.send_failed))
+                    }
                 }
             })
         } else
@@ -261,15 +253,18 @@ class SendFragment: Fragment(), View.OnClickListener {
     }
 
     fun insertItemToBulletin(file: BmobFile?) {
-        val bulletin = Bulletin(sendName!!, sendContent, file)
+        val bulletin = Bulletin(mSendName!!, mSendContent, file)
         bulletin.save(object: SaveListener<String>() {
             override fun done(objectId: String, e: BmobException?) {
                 if (e == null) {
-                    Utils.showLog("Insert bulletin succeed：" + objectId)
+                    Utils.showLog("Insert bulletin succeed: " + objectId)
                     Utils.showToast(mContext!!,
                             mContext!!.getString(R.string.send_succeed))
-                } else
-                    Utils.showLog("Insert bulletin failed：" + e.message + "," + e.errorCode)
+                } else {
+                    Utils.showLog("Insert bulletin failed: " + e.message + " Error code: " + e.errorCode)
+                    Utils.showToast(mContext!!,
+                            mContext!!.getString(R.string.send_failed))
+                }
             }
         })
     }

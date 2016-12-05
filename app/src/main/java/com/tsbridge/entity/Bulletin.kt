@@ -17,7 +17,7 @@ class Bulletin(val teacherName: String,
     init {
         Utils.showLog("Create a Bulletin object")
 
-        /* 如果类名与表名不一致，这里指定表名即可 */
+        /** 如果类名与表名不一致，这里指定表名即可 */
         //setTableName("Bulletin");
     }
 }

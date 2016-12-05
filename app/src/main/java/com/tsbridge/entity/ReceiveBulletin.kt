@@ -1,7 +1,6 @@
 package com.tsbridge.entity
 
 import cn.bmob.v3.BmobObject
-import com.tsbridge.utils.Utils
 
 /**
  * teacherName String 发布者名称
@@ -12,10 +11,10 @@ import com.tsbridge.utils.Utils
  * 如 BulletinFragment 类获取数据传给 BulletinAdapter 后，需要将值取出显示在列表
  */
 class ReceiveBulletin(val teacherName: String,
-                      val teacherTime: String,
+                      val bulletinTime: String,
                       val bulletinContent: String?,
                       val bulletinImage: String?): BmobObject() {
     init {
-        Utils.showLog("Create a ReceiveBulletin object")
+        //Utils.showLog("Create a ReceiveBulletin object")
     }
 }
