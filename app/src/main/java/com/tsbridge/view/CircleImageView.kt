@@ -14,26 +14,24 @@ import android.widget.ImageView
 import com.tsbridge.R
 
 class CircleImageView: ImageView {
-    companion object {
-        /** 图片显示的模式，按比例缩放图片，使得图片长 (宽)的大于等于视图的相应维度 */
-        private val SCALE_TYPE = ImageView.ScaleType.CENTER_CROP
-        /**
-         * ARGB指的是一种色彩模式，里面A代表Alpha，R表示red，G表示green，B表示blue,
-         * ALPHA_8        代表8位Alpha位图
-         * ARGB_4444      代表16位ARGB位图
-         * ARGB_8888     代表32位ARGB位图
-         * RGB_565         代表8位RGB位图
-         */
-        private val BITMAP_CONFIG = Bitmap.Config.ARGB_8888
-        private val COLORDRAWABLE_DIMENSION = 2
-        /** 圆形image的边框大小  */
-        private val DEFAULT_BORDER_WIDTH = 0
-        /** 圆形image的边框颜色，默认为黑色  */
-        private val DEFAULT_BORDER_COLOR = Color.BLACK
-        /** 填充颜色，默认为：透明  */
-        private val DEFAULT_FILL_COLOR = Color.TRANSPARENT
-        private val DEFAULT_BORDER_OVERLAY = false
-    }
+    /** 图片显示的模式，按比例缩放图片，使得图片长 (宽)的大于等于视图的相应维度 */
+    private val SCALE_TYPE = ImageView.ScaleType.CENTER_CROP
+    /**
+     * ARGB指的是一种色彩模式，里面A代表Alpha，R表示red，G表示green，B表示blue,
+     * ALPHA_8        代表8位Alpha位图
+     * ARGB_4444      代表16位ARGB位图
+     * ARGB_8888     代表32位ARGB位图
+     * RGB_565         代表8位RGB位图
+     */
+    private val BITMAP_CONFIG = Bitmap.Config.ARGB_8888
+    private val COLORDRAWABLE_DIMENSION = 2
+    /** 圆形image的边框大小  */
+    private val DEFAULT_BORDER_WIDTH = 0
+    /** 圆形image的边框颜色，默认为黑色  */
+    private val DEFAULT_BORDER_COLOR = Color.BLACK
+    /** 填充颜色，默认为：透明  */
+    private val DEFAULT_FILL_COLOR = Color.TRANSPARENT
+    private val DEFAULT_BORDER_OVERLAY = false
 
     private val mDrawableRect = RectF()
     private val mBorderRect = RectF()
@@ -73,7 +71,7 @@ class CircleImageView: ImageView {
 
     /** 在 java 代码中直接 new 自定义组件对象时，调用一参构造函数 */
     constructor(context: Context): super(context) {
-        init()
+        initialization()
     }
 
     /** 在 xml 布局中添加组件时，调用的是两参构造函数，进而调用三参函数 */
@@ -90,10 +88,10 @@ class CircleImageView: ImageView {
         mFillColor = a.getColor(R.styleable.CircleImageView_circle_fill_color,
                 DEFAULT_FILL_COLOR)
         a.recycle()
-        init()
+        initialization()
     }
 
-    private fun init() {
+    private fun initialization() {
         super.setScaleType(SCALE_TYPE)
         mReady = true
         if (mSetupPending) {
@@ -296,29 +294,30 @@ class CircleImageView: ImageView {
         if (mBitmap == null) {
             invalidate()
             return
+        } else {
+            mBitmapShader = BitmapShader(mBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
+            mBitmapPaint.isAntiAlias = true
+            mBitmapPaint.shader = mBitmapShader
+            mBorderPaint.style = Paint.Style.STROKE
+            mBorderPaint.isAntiAlias = true
+            mBorderPaint.color = mBorderColor
+            mBorderPaint.strokeWidth = mBorderWidth.toFloat()
+            mFillPaint.style = Paint.Style.FILL
+            mFillPaint.isAntiAlias = true
+            mFillPaint.color = mFillColor
+            mBitmapHeight = mBitmap!!.height
+            mBitmapWidth = mBitmap!!.width
+            mBorderRect.set(calculateBounds())
+            mBorderRadius = Math.min((mBorderRect.height() - mBorderWidth) / 2.0f,
+                    (mBorderRect.width() - mBorderWidth) / 2.0f)
+            mDrawableRect.set(mBorderRect)
+            if (!mBorderOverlay && mBorderWidth > 0)
+                mDrawableRect.inset(mBorderWidth - 1.0f, mBorderWidth - 1.0f)
+            mDrawableRadius = Math.min(mDrawableRect.height() / 2.0f, mDrawableRect.width() / 2.0f)
+            applyColorFilter()
+            /** updateShaderMatrix();  */
+            invalidate()
         }
-        mBitmapShader = BitmapShader(mBitmap!!, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP)
-        mBitmapPaint.isAntiAlias = true
-        mBitmapPaint.shader = mBitmapShader
-        mBorderPaint.style = Paint.Style.STROKE
-        mBorderPaint.isAntiAlias = true
-        mBorderPaint.color = mBorderColor
-        mBorderPaint.strokeWidth = mBorderWidth.toFloat()
-        mFillPaint.style = Paint.Style.FILL
-        mFillPaint.isAntiAlias = true
-        mFillPaint.color = mFillColor
-        mBitmapHeight = mBitmap!!.height
-        mBitmapWidth = mBitmap!!.width
-        mBorderRect.set(calculateBounds())
-        mBorderRadius = Math.min((mBorderRect.height() - mBorderWidth) / 2.0f,
-                (mBorderRect.width() - mBorderWidth) / 2.0f)
-        mDrawableRect.set(mBorderRect)
-        if (!mBorderOverlay && mBorderWidth > 0)
-            mDrawableRect.inset(mBorderWidth - 1.0f, mBorderWidth - 1.0f)
-        mDrawableRadius = Math.min(mDrawableRect.height() / 2.0f, mDrawableRect.width() / 2.0f)
-        applyColorFilter()
-        /** updateShaderMatrix();  */
-        invalidate()
     }
 
     private fun calculateBounds(): RectF {

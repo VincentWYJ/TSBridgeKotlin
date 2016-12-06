@@ -1,7 +1,6 @@
 package com.tsbridge.fragment
 
 import android.app.Activity
-import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -22,50 +21,40 @@ import com.tsbridge.activity.NetworkActivity
 import com.tsbridge.activity.PermissionActivity
 import com.tsbridge.entity.Bulletin
 import com.tsbridge.utils.Utils
-import kotlinx.android.synthetic.main.send_fragment.view.*
+import kotlinx.android.synthetic.main.send_fragment.*
 import java.io.File
 
 class SendFragment: Fragment(), View.OnClickListener {
     private val SELECT_PIC_LOW = 121
     private val SELECT_PIC_KITKAT = 122
 
-    private var mContext: Context? = null
-
-    private var mSendName: String? = null
+    private var mSendName = ""
     private var mSendContent: String? = null
     private var mSendImageUri: Uri? = null
-
-    private var mRootView: View? = null
 
     private var mIsBackFromNetwork = false
     private var mIsBackFromPermission = false
 
-    override fun onCreateView(inflater: LayoutInflater?,
+    override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?)
                                 : View? {
         Utils.showLog("SendFragment onCreateView")
 
-        mRootView = inflater!!.inflate(R.layout.send_fragment, container, false)
-        return mRootView
+        return inflater.inflate(R.layout.send_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Utils.showLog("SendFragment onActivityCreated")
 
-        initParams()
-        initViews()
+        initialization()
     }
 
-    private fun initParams() {
-        mContext = activity
-    }
-
-    private fun initViews() {
-        mRootView!!.send_image_sel.setOnClickListener(this@SendFragment)
-        mRootView!!.send_image_del.setOnClickListener(this@SendFragment)
-        mRootView!!.send_btn.setOnClickListener(this@SendFragment)
+    private fun initialization() {
+        send_image_sel.setOnClickListener(this@SendFragment)
+        send_image_del.setOnClickListener(this@SendFragment)
+        send_btn.setOnClickListener(this@SendFragment)
     }
 
     override fun onClick(view: View) {
@@ -83,12 +72,12 @@ class SendFragment: Fragment(), View.OnClickListener {
      * 相机拍照：MediaStore.ACTION_IMAGE_CAPTURE
      */
     private fun selectImageBtn() {
-        var storagePermission = Utils.checkPermission(mContext!!,
+        var storagePermission = Utils.checkPermission(activity,
                 Utils.EXTERNAL_STORAGE_PERMISSION)
         if (storagePermission != PackageManager.PERMISSION_GRANTED) {
             Utils.showLog("Has not External storage Permission")
 
-            var permissionAccessTimes = Utils.getPermissionAccessTimes(mContext!!,
+            var permissionAccessTimes = Utils.getPermissionAccessTimes(activity,
                     Utils.EXTERNAL_STORAGE_PERMISSION_ACCESS_TIMES_KEY,
                     1)
             if (permissionAccessTimes > 1 &&
@@ -96,7 +85,7 @@ class SendFragment: Fragment(), View.OnClickListener {
                     Utils.EXTERNAL_STORAGE_PERMISSION)) {
                 /** 用户拒绝了权限申请并选择了不再显示 */
                 mIsBackFromPermission = true
-                val intent = Intent(mContext, PermissionActivity::class.java)
+                val intent = Intent(activity, PermissionActivity::class.java)
                 intent.putExtra(Utils.PERMISSION_TITLE,
                         getString(R.string.permission_external_storage_title))
                 intent.putExtra(Utils.PERMISSION_EXPLAIN,
@@ -107,7 +96,7 @@ class SendFragment: Fragment(), View.OnClickListener {
             }
             if (permissionAccessTimes == 1) {
                 permissionAccessTimes++
-                Utils.setPermissionAccessTimes(mContext!!,
+                Utils.setPermissionAccessTimes(activity,
                         Utils.EXTERNAL_STORAGE_PERMISSION_ACCESS_TIMES_KEY,
                         permissionAccessTimes)
             }
@@ -132,7 +121,7 @@ class SendFragment: Fragment(), View.OnClickListener {
                     selectImage()
                 } else {
                     Utils.showLog("Manifest.permission.WRITE_EXTERNAL_STORAGE access failed")
-                    Utils.showToast(mContext!!, mContext!!.getString(R.string.permission_denied))
+                    Utils.showToast(activity, activity.getString(R.string.permission_denied))
                 }
             else ->
                 super.onRequestPermissionsResult(requestCode, permissions, grantResults)
@@ -152,14 +141,14 @@ class SendFragment: Fragment(), View.OnClickListener {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent) {
         super.onActivityResult(requestCode, resultCode, intent)
         Utils.showLog("Back to onActivityResult from getting image")
 
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 SELECT_PIC_KITKAT, SELECT_PIC_LOW -> {
-                    mSendImageUri = intent!!.data
+                    mSendImageUri = intent.data
                     if (mSendImageUri != null)
                         imagePreview(mSendImageUri!!)
                     else
@@ -169,30 +158,30 @@ class SendFragment: Fragment(), View.OnClickListener {
             }
         } else {
             Utils.showLog("No selected image")
-            Utils.showToast(mContext!!, mContext!!.getString(R.string.no_selected_image))
+            Utils.showToast(activity, activity.getString(R.string.no_selected_image))
         }
     }
 
     private fun imagePreview(uri: Uri) {
-        var picturePath = Utils.getPath(mContext!!, uri)
-        Utils.showLog(picturePath!!)
-        Glide.with(mContext).load(picturePath).into(mRootView!!.send_image)
+        var picturePath = Utils.getPath(activity, uri)
+        Utils.showLog(picturePath)
+        Glide.with(activity).load(picturePath).into(send_image)
     }
 
     private fun clearImage() {
         if (mSendImageUri != null) {
             mSendImageUri = null
-            mRootView!!.send_image.setImageResource(R.drawable.black)
+            send_image.setImageResource(R.drawable.black)
         }
     }
 
     /** 添加数据到云上之前先进行网络判断 */
     private fun sendBulletinBtn() {
-        if (Utils.isNetWorkConnected(mContext!!))
+        if (Utils.isNetWorkConnected(activity))
             insertItem()
         else {
             mIsBackFromNetwork = true
-            startActivity(Intent(mContext, NetworkActivity::class.java))
+            startActivity(Intent(activity, NetworkActivity::class.java))
         }
     }
 
@@ -204,38 +193,38 @@ class SendFragment: Fragment(), View.OnClickListener {
         if (mIsBackFromNetwork && Utils.mIsBackFromSetNetwork) {
             mIsBackFromNetwork = false
             Utils.mIsBackFromSetNetwork = false
-            if (Utils.isNetWorkConnected(mContext!!))
+            if (Utils.isNetWorkConnected(activity))
                 insertItem()
             else
-                Utils.showToast(mContext!!,
-                        mContext!!.getString(R.string.no_connected_network))
+                Utils.showToast(activity,
+                        activity.getString(R.string.no_connected_network))
         }
 
         if (mIsBackFromPermission && Utils.mIsBackFromSetPermission) {
             mIsBackFromPermission = false
             Utils.mIsBackFromSetPermission = false
-            var storagePermission = Utils.checkPermission(mContext!!,
+            var storagePermission = Utils.checkPermission(activity,
                     Utils.EXTERNAL_STORAGE_PERMISSION)
             if (storagePermission == PackageManager.PERMISSION_GRANTED)
                 selectImage()
             else {
                 Utils.showLog("Storage permission access failed")
-                Utils.showToast(mContext!!, mContext!!.getString(R.string.permission_denied))
+                Utils.showToast(activity, activity.getString(R.string.permission_denied))
             }
         }
     }
 
     private fun insertItem() {
-        mSendName = mRootView!!.send_name.text.toString()
-        mSendContent = mRootView!!.send_content.text.toString()
+        mSendName = send_name.text.toString()
+        mSendContent = send_content.text.toString()
         if (TextUtils.isEmpty(mSendName) ||
                 (TextUtils.isEmpty(mSendContent) && mSendImageUri == null)) {
-            Utils.showToast(mContext!!, mContext!!.getString(R.string.no_inputted_content))
+            Utils.showToast(activity, activity.getString(R.string.no_inputted_content))
             return
         }
         if (mSendImageUri != null) {
             /** 获取路径一定要用 Utils 中定义的方法，如果使用 uri.path 不同 SDK 结果不同 */
-            val file = BmobFile(File(Utils.getPath(mContext!!, mSendImageUri!!)))
+            val file = BmobFile(File(Utils.getPath(activity, mSendImageUri!!)))
             file.uploadblock(object : UploadFileListener() {
                 override fun done(e: BmobException?) {
                     if (e == null) {
@@ -243,8 +232,8 @@ class SendFragment: Fragment(), View.OnClickListener {
                         insertItemToBulletin(file)
                     } else {
                         Utils.showLog("Upload image failed: " + e.message + " Error code: " + e.errorCode)
-                        Utils.showToast(mContext!!,
-                                mContext!!.getString(R.string.send_failed))
+                        Utils.showToast(activity,
+                                activity.getString(R.string.send_failed))
                     }
                 }
             })
@@ -253,17 +242,17 @@ class SendFragment: Fragment(), View.OnClickListener {
     }
 
     fun insertItemToBulletin(file: BmobFile?) {
-        val bulletin = Bulletin(mSendName!!, mSendContent, file)
+        val bulletin = Bulletin(mSendName, mSendContent, file)
         bulletin.save(object: SaveListener<String>() {
             override fun done(objectId: String, e: BmobException?) {
                 if (e == null) {
                     Utils.showLog("Insert bulletin succeed: " + objectId)
-                    Utils.showToast(mContext!!,
-                            mContext!!.getString(R.string.send_succeed))
+                    Utils.showToast(activity,
+                            activity.getString(R.string.send_succeed))
                 } else {
                     Utils.showLog("Insert bulletin failed: " + e.message + " Error code: " + e.errorCode)
-                    Utils.showToast(mContext!!,
-                            mContext!!.getString(R.string.send_failed))
+                    Utils.showToast(activity,
+                            activity.getString(R.string.send_failed))
                 }
             }
         })

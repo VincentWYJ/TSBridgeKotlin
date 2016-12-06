@@ -16,10 +16,14 @@ class NetworkActivity : AppCompatActivity(), View.OnClickListener {
 
         setContentView(R.layout.network_activity)
 
-        Utils.mIsBackFromSetNetwork = true
+        initialization()
+    }
 
+    private fun initialization() {
         network_mobile_button.setOnClickListener(this@NetworkActivity)
         network_wifi_button.setOnClickListener(this@NetworkActivity)
+
+        Utils.mIsBackFromSetNetwork = true
     }
 
     override fun onClick(v: View) {

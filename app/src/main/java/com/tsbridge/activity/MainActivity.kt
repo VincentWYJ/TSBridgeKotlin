@@ -1,7 +1,6 @@
 package com.tsbridge.activity
 
 import android.os.Bundle
-import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import cn.bmob.v3.Bmob
 import com.tsbridge.R
@@ -14,34 +13,24 @@ import kotlinx.android.synthetic.main.main_content.*
 
 /** 2016.11.29 开始利用 Kotlin 语言编写 Android */
 class MainActivity: AppCompatActivity() {
-    private var mTabNames: Array<String>? = null
-    private var mFragments: List<Fragment>? = null
-    private var mAdapter: MainAdapter? = null
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Utils.showLog("MainActivity onCreate")
 
         setContentView(R.layout.main_activity)
 
-        initParams()
-        initViews()
+        initialization()
     }
 
-    private fun initParams() {
-        /** 初始化Bmob云数据库的操作环境 */
-        Bmob.initialize(this@MainActivity, "49e434b5c094767986f0ba49baa8790f")
-
-        mTabNames = resources.getStringArray(R.array.title_array)
-    }
-
-    private fun initViews() {
+    private fun initialization() {
         setSupportActionBar(toolBar)
-
-        mFragments = arrayListOf(BulletinFragment(), SendFragment())
-        mAdapter = MainAdapter(supportFragmentManager, mTabNames, mFragments)
+        val mTabNames = resources.getStringArray(R.array.title_array)
+        val mFragments = arrayListOf(BulletinFragment(), SendFragment())
+        val mAdapter = MainAdapter(supportFragmentManager, mTabNames, mFragments)
         viewPager.adapter = mAdapter
         tabLayout.setupWithViewPager(viewPager)
+
+        Bmob.initialize(this@MainActivity, "49e434b5c094767986f0ba49baa8790f")
     }
 
     override fun onDestroy() {

@@ -1,12 +1,10 @@
 package com.tsbridge.fragment
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
@@ -22,58 +20,41 @@ import com.tsbridge.entity.Bulletin
 import com.tsbridge.entity.ReceiveBulletin
 import com.tsbridge.utils.Utils
 import kotlinx.android.synthetic.main.bulletin_fragment.*
-import kotlinx.android.synthetic.main.bulletin_fragment.view.*
 import org.jetbrains.anko.support.v4.onRefresh
 import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
 class BulletinFragment: Fragment() {
-    private var mContext: Context? = null
-
-    private var mBulletins: ArrayList<ReceiveBulletin>? = null
+    private val mBulletins = ArrayList<ReceiveBulletin>()
     private var mBulletinAdapter: BulletinAdapter? = null
 
-    private var mRootView: View? = null
-    private var mRecyclerView: RecyclerView? = null
-
     private var mIsBackFromNetwork = false
-
     private var mIsRefreshing = false
     private var mIsRefreshingFromPullDown = false
     private var mBulletinCount = 0
 
-    private val mNames = arrayOf("名字1", "名字2", "名字3", "名字4", "名字5")
-    private val mTimes = arrayOf("时间1", "时间2", "时间3", "时间4", "时间5")
-    private val mContents = arrayOf("内容1", "内容2", "内容3", "内容4", "内容5")
-    private val mImageUrls = arrayOf(null, "www.baidu.com", "www.baidu.com",
-            "www.baidu.com", "www.baidu.com")
-
-    override fun onCreateView(inflater: LayoutInflater?,
+    override fun onCreateView(inflater: LayoutInflater,
                               container: ViewGroup?,
                               savedInstanceState: Bundle?): View? {
         Utils.showLog("BulletinFragment onCreateView")
 
-        mRootView = inflater!!.inflate(R.layout.bulletin_fragment, container, false)
-        return mRootView
+        return inflater.inflate(R.layout.bulletin_fragment, container, false)
     }
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         Utils.showLog("BulletinFragment onActivityCreated")
 
-        initParams()
-        initViews()
+        initialization()
     }
 
-    private fun initParams() {
-        mContext = activity
-        mBulletins = ArrayList<ReceiveBulletin>()
-        mBulletinAdapter = BulletinAdapter(mContext!!, mBulletins)
-    }
-
-    private fun initViews() {
-        //bulletin_refresh.setOnRefreshListener(this)
+    private fun initialization() {
+        bulletin_list.hasFixedSize()
+        bulletin_list.itemAnimator = DefaultItemAnimator()
+        bulletin_list.layoutManager = LinearLayoutManager(activity)
+        mBulletinAdapter = BulletinAdapter(activity, mBulletins)
+        bulletin_list.adapter = mBulletinAdapter
         bulletin_refresh.setProgressViewOffset(false, 0, TypedValue.applyDimension(
                 TypedValue.COMPLEX_UNIT_DIP, 24F, resources.displayMetrics).toInt())
         bulletin_refresh.onRefresh() {
@@ -87,22 +68,16 @@ class BulletinFragment: Fragment() {
             }
         }
 
-        mRecyclerView = mRootView!!.bulletin_list
-        mRecyclerView!!.hasFixedSize()
-        mRecyclerView!!.layoutManager = LinearLayoutManager(mContext)
-        mRecyclerView!!.itemAnimator = DefaultItemAnimator()
-        mRecyclerView!!.adapter = mBulletinAdapter
-
         getItemsFromBulletin()
     }
 
     /** 从云上获取数据之前先进行网络判断 */
     private fun getItemsFromBulletin() {
-        if (Utils.isNetWorkConnected(mContext!!))
+        if (Utils.isNetWorkConnected(activity))
             QueryBulletin()
         else {
             mIsBackFromNetwork = true
-            startActivity(Intent(mContext, NetworkActivity::class.java))
+            startActivity(Intent(activity, NetworkActivity::class.java))
         }
     }
 
@@ -113,11 +88,11 @@ class BulletinFragment: Fragment() {
         if (mIsBackFromNetwork && Utils.mIsBackFromSetNetwork) {
             mIsBackFromNetwork = false
             Utils.mIsBackFromSetNetwork = false
-            if (Utils.isNetWorkConnected(mContext!!))
+            if (Utils.isNetWorkConnected(activity))
                 getItemsFromBulletin()
             else
-                Utils.showToast(mContext!!,
-                        mContext!!.getString(R.string.no_connected_network))
+                Utils.showToast(activity,
+                        activity.getString(R.string.no_connected_network))
         }
     }
 
@@ -136,11 +111,16 @@ class BulletinFragment: Fragment() {
         else
             query.order("-updatedAt")
         if(mBulletinCount > 0) {
-            var lastDate = mBulletins!![0].bulletinTime
+            var lastDate = mBulletins[0].bulletinTime
             var sdf = SimpleDateFormat("yyyy-MM-dd HH:mm:ss")
             var date: Date? = null
             try {
                 date = sdf.parse(lastDate)
+                /**
+                 * 由于createdAt、updatedAt是服务器自动生成的时间，
+                 * 在服务器保存的是精确到微秒值的时间，所以，基于时间类型的比较的值要加1秒
+                 * Date 的 getter/setter 方法都不支持了，建议是用 Calendar.get(Calendar.SECOND)
+                 */
                 date.seconds += 1
             } catch (e: ParseException) {
                 e.printStackTrace()
@@ -158,14 +138,14 @@ class BulletinFragment: Fragment() {
                                 bulletin.bulletinContent,
                                 bulletin.bulletinImage?.fileUrl)
                         if (mIsRefreshingFromPullDown)
-                            mBulletins!!.add(0, bulletinT)
+                            mBulletins.add(0, bulletinT)
                         else
-                            mBulletins!!.add(bulletinT)
+                            mBulletins.add(bulletinT)
                     }
-                    if (mBulletins!!.size > mBulletinCount) {
-                        mBulletinCount = mBulletins!!.size
+                    if (mBulletins.size > mBulletinCount) {
+                        mBulletinCount = mBulletins.size
 
-                        mBulletinAdapter!!.notifyDataSetChanged()
+                        mBulletinAdapter?.notifyDataSetChanged()
                     }
                 } else
                     Utils.showLog("失败: " + e.message + "," + e.errorCode)
@@ -180,9 +160,6 @@ class BulletinFragment: Fragment() {
         super.onDestroyView()
         Utils.showLog("BulletinFragment onDestroyView")
 
-        if (mBulletins != null) {
-            mBulletins!!.clear()
-            mBulletins = null
-        }
+        mBulletins.clear()
     }
 }

@@ -12,22 +12,22 @@ import com.tsbridge.utils.Utils
  * 注：形参用 val 防止后续被修改
  */
 class MainAdapter(mFragmentManager: FragmentManager,
-                  private val mTabNames: Array<String>?,
-                  private val mFragments: List<Fragment>?)
+                  private val mTabNames: Array<String>,
+                  private val mFragments: List<Fragment>)
         : FragmentStatePagerAdapter(mFragmentManager) {
     init {
         Utils.showLog("Create a MainAdapter object")
     }
 
     override fun getItem(position: Int): Fragment {
-        return mFragments!![position]
+        return mFragments[position]
     }
 
     override fun getCount(): Int {
-        return mFragments!!.size
+        return mFragments.size
     }
 
     override fun getPageTitle(position: Int): CharSequence {
-        return mTabNames!![position]
+        return mTabNames[position]
     }
 }

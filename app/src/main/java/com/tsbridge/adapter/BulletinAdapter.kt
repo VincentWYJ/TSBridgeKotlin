@@ -19,7 +19,7 @@ import org.jetbrains.anko.onClick
 import java.io.File
 
 class BulletinAdapter(private val mContext: Context,
-                      private val mBulletins: List<ReceiveBulletin>?)
+                      private val mBulletins: List<ReceiveBulletin>)
         : RecyclerView.Adapter<BulletinAdapter.ViewHolder>() {
     init {
         Utils.showLog("Create a BulletinAdapter object")
@@ -36,21 +36,21 @@ class BulletinAdapter(private val mContext: Context,
         holder.bindItemView(position)
     }
 
-    override fun getItemCount() = mBulletins!!.size
+    override fun getItemCount() = mBulletins.size
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         fun bindItemView(position: Int) {
-            QueryImageTask(itemView.bulletin_image).execute(mBulletins!![position].bulletinImage)
+            QueryImageTask(itemView.bulletin_image).execute(mBulletins[position].bulletinImage)
             /** 若公告图片内容为 null ，则隐藏让其不可点击 */
-            if (mBulletins!![position].bulletinImage == null)
+            if (mBulletins[position].bulletinImage == null)
                 itemView.bulletin_content_image.visibility = View.GONE
             else {
                 itemView.bulletin_content_image.visibility = View.VISIBLE
                 itemView.bulletin_content_image.onClick {
-                    showFullImage(mBulletins!![position].bulletinImage)
+                    showFullImage(mBulletins[position].bulletinImage)
                 }
                 QueryImageTask(itemView.bulletin_content_image)
-                        .execute(mBulletins!![position].bulletinImage)
+                        .execute(mBulletins[position].bulletinImage)
             }
             itemView.bulletin_name.text = mBulletins[position].teacherName
             itemView.bulletin_time.text = mBulletins[position].bulletinTime

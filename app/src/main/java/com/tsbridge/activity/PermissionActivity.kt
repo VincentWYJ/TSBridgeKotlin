@@ -10,7 +10,7 @@ import kotlinx.android.synthetic.main.permission_activity.*
 import org.jetbrains.anko.onClick
 
 class PermissionActivity : AppCompatActivity() {
-    private var mPermissionName: String? = null
+    private var mPermissionName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,10 +18,11 @@ class PermissionActivity : AppCompatActivity() {
 
         setContentView(R.layout.permission_activity)
 
-        Utils.mIsBackFromSetPermission = true
+        initialization()
+    }
 
+    private fun initialization() {
         val bundle = intent.extras
-
         mPermissionName = bundle.getString(Utils.PERMISSION_NAME)
         permission_title.text = bundle.getString(Utils.PERMISSION_TITLE)
         permission_explain.text = bundle.getString(Utils.PERMISSION_EXPLAIN)
@@ -30,6 +31,8 @@ class PermissionActivity : AppCompatActivity() {
 
             Utils.showInstalledAppDetails(this@PermissionActivity)
         }
+
+        Utils.mIsBackFromSetPermission = true
     }
 
     public override fun onResume() {
@@ -37,7 +40,7 @@ class PermissionActivity : AppCompatActivity() {
         Utils.showLog("PermissionActivity Resume")
 
         val hasCameraPermission = ContextCompat.checkSelfPermission(this@PermissionActivity,
-                mPermissionName!!)
+                mPermissionName)
         if (hasCameraPermission == PackageManager.PERMISSION_GRANTED)
             finish()
     }

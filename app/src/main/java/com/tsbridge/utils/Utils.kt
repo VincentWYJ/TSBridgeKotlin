@@ -36,8 +36,8 @@ object Utils {
     }
 
     /** 打印日志 */
-    fun showLog(message: Any) {
-        Log.i(LOG_TAG, message.toString())
+    fun showLog(message: Any?) {
+        Log.i(LOG_TAG, message?.toString())
     }
 
     /**
@@ -60,7 +60,7 @@ object Utils {
                 val id = DocumentsContract.getDocumentId(uri)
                 val contentUri = ContentUris.withAppendedId(
                         Uri.parse("content://downloads/public_downloads"),
-                                java.lang.Long.valueOf(id)!!)
+                                java.lang.Long.valueOf(id))
                 return getDataColumn(context, contentUri, null, null)
             } else if (isMediaDocument(uri)) {
                 val docId = DocumentsContract.getDocumentId(uri)
