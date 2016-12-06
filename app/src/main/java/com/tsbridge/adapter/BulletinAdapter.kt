@@ -2,12 +2,10 @@ package com.tsbridge.adapter
 
 import android.app.Dialog
 import android.content.Context
-import android.os.AsyncTask
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import com.bumptech.glide.Glide
 import com.tsbridge.R
 import com.tsbridge.entity.ReceiveBulletin
@@ -16,7 +14,6 @@ import kotlinx.android.synthetic.main.bulletin_item.view.*
 import org.jetbrains.anko.imageView
 import org.jetbrains.anko.linearLayout
 import org.jetbrains.anko.onClick
-import java.io.File
 
 class BulletinAdapter(private val mContext: Context,
                       private val mBulletins: List<ReceiveBulletin>)
@@ -40,7 +37,10 @@ class BulletinAdapter(private val mContext: Context,
 
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         fun bindItemView(position: Int) {
-            QueryImageTask(itemView.bulletin_image).execute(mBulletins[position].bulletinImage)
+            Glide.with(mContext.applicationContext)
+                    .load(mBulletins[position].bulletinImage)
+                    .error(R.drawable.bulletin_image)
+                    .into(itemView.bulletin_image)
             /** 若公告图片内容为 null ，则隐藏让其不可点击 */
             if (mBulletins[position].bulletinImage == null)
                 itemView.bulletin_content_image.visibility = View.GONE
@@ -49,8 +49,9 @@ class BulletinAdapter(private val mContext: Context,
                 itemView.bulletin_content_image.onClick {
                     showFullImage(mBulletins[position].bulletinImage)
                 }
-                QueryImageTask(itemView.bulletin_content_image)
-                        .execute(mBulletins[position].bulletinImage)
+                Glide.with(mContext.applicationContext)
+                        .load(mBulletins[position].bulletinImage)
+                        .into(itemView.bulletin_content_image)
             }
             itemView.bulletin_name.text = mBulletins[position].teacherName
             itemView.bulletin_time.text = mBulletins[position].bulletinTime
@@ -69,7 +70,7 @@ class BulletinAdapter(private val mContext: Context,
             val dialog = Dialog(mContext, R.style.DialogTitle)
             dialog.setContentView(mContext.linearLayout {
                 imageView {
-                    QueryImageTask(this).execute(imageUri)
+                    Glide.with(mContext.applicationContext).load(imageUri).into(this)
                     onClick {
                         dialog.dismiss()
                     }
@@ -77,28 +78,6 @@ class BulletinAdapter(private val mContext: Context,
             })
 
             dialog.show()
-        }
-    }
-
-    private inner class QueryImageTask(val mBulletinImage: ImageView?)
-            : AsyncTask<String, Void, File>() {
-        override fun doInBackground(vararg params: String): File? {
-            val imageUrl = params[0]
-            val imageSize = mContext.resources.getDimensionPixelSize(R.dimen.bulletin_image)
-            try {
-                return Glide.with(mContext).load(imageUrl).downloadOnly(imageSize, imageSize).get()
-            } catch (ex: Exception) {
-                return null
-            }
-        }
-
-        override fun onPostExecute(result: File?) {
-            if (result == null) {
-                Utils.showLog("Image file is not existed")
-                Glide.with(mContext).load(R.drawable.bulletin_image).into(mBulletinImage)
-                return
-            }
-            Glide.with(mContext).load(result).into(mBulletinImage)
         }
     }
 }

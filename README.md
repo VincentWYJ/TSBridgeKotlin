@@ -18,9 +18,15 @@
 
 5、添加了需要联网操作的网络连接判断，如果没有连接则给出跳转页面让用户设置网络（包括移动和无线两个入口）；
 
-6、添加了 SDK 6.0 及以上的危险权限申请机制，目前有Manifest.permission.WRITE_EXTERNAL_STORAGE；
+6、添加了 SDK 6.0 及以上的危险权限申请机制，目前有 Manifest.permission.WRITE_EXTERNAL_STORAGE；
 当用户拒绝并选择了不再显示时，下次操作需要某权限时会显示自定义界面引导用户去设置；
 注：同上面的网络设置，从设置页面回到某页面时会自行判断所需条件是否满足，如果满足则进行下一步，否则给出提示
 
 7、添加了公告信息列表的下拉刷新功能，如果有最新的数据则加载
 注：最新的数据显示在列表上方，即开头部分
+
+8、当activity的上下文context销毁以后，若 Glide 的 with 和其发生关联正在异步加载图片，那么就会出现异常，
+解决方法是开始新建加载任务时就通过 context 去获取全局的上下文（ onetxt.getApplicationContext() ），
+在 Kotlin 中是 context.applicationContext；
+
+9、将原先利用异步类 + Glide 实现加载图片的改为了 Glide，因为其本身就是异步的，而图片加载完成后又会切换到主线程去显示图片；
