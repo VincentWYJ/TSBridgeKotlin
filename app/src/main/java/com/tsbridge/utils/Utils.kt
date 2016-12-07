@@ -35,7 +35,7 @@ object Utils {
         Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT).show()
     }
 
-    /** 打印日志 */
+    /** 打印日志，若 message 为 null，那么调用 toString() 后返回 "null" */
     fun showLog(message: Any?) {
         Log.i(LOG_TAG, message?.toString())
     }

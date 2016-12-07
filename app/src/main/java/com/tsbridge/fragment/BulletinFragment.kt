@@ -89,10 +89,14 @@ class BulletinFragment: Fragment() {
             mIsBackFromNetwork = false
             Utils.mIsBackFromSetNetwork = false
             if (Utils.isNetWorkConnected(activity))
-                getItemsFromBulletin()
-            else
+                QueryBulletin()
+            else {
                 Utils.showToast(activity,
                         activity.getString(R.string.no_connected_network))
+                bulletin_refresh.isRefreshing = false
+                mIsRefreshing = false
+                mIsRefreshingFromPullDown = false
+            }
         }
     }
 
