@@ -6,25 +6,44 @@
     <string name="hello_world">"Hello World!"</string>
 
     <string-array name="title_array">
-        <item>"公告"</item>
-        <item>"发布"</item>
+        <item>"简信"</item>
+        <item>"发送"</item>
+        <item>"我的"</item>
     </string-array>
 
-    <string name="send_name">"输入您的名称: "</string>
-    <string name="send_name_hint">"名称..."</string>
-    <string name="send_time">"当前时间: "</string>
-    <string name="send_time_hint">"时间...."</string>
+    <string name="login_name">"用户名: "</string>
+    <string name="login_name_hint">"名称...必填"</string>
+    <string name="login_psw">"密码: "</string>
+    <string name="login_psw_hint">"密码...必填"</string>
+    <string name="login_image">"选择头像图片(注册必选)"</string>
+    <string name="login_in">"登录"</string>
+    <string name="login_reg">"注册"</string>
+    <string name="login_out">"注销"</string>
+    <string name="login_info_2">"请确保用户名、密码均已设置"</string>
+    <string name="login_info_3">"请确保用户名、密码、头像均已设置"</string>
+    <string name="login_in_failed">"登录失败"</string>
+    <string name="login_reg_failed">"注册失败"</string>
+    <string name="login_out_failed">"注销失败"</string>
+    <string name="login_in_succeed">"登录成功"</string>
+    <string name="login_reg_succeed">"注册并登录成功"</string>
+    <string name="login_out_succeed">"注销成功"</string>
+    <string name="login_yes_image">"已注册，无需选择头像图片"</string>
+    <string name="login_yes">"已经登录，无需注册或登录"</string>
+    <string name="login_no">"未登录，无需注销"</string>
+
     <string name="send_content">"输入文字内容: "</string>
     <string name="send_content_hint">"内容..."</string>
     <string name="send_image_sel">"选择图片内容"</string>
     <string name="send_image_del">"清除"</string>
-    <string name="send_btn">"发布"</string>
-
+    <string name="send_btn">"发送"</string>
     <string name="no_selected_image">"没有选择图片"</string>
     <string name="no_connected_network">""网络未连接成功""</string>
-    <string name="no_inputted_content">"请输入名称和内容(文字或图片)"</string>
-    <string name="send_succeed">"公告发布成功"</string>
-    <string name="send_failed">"公告发布失败"</string>
+    <string name="no_inputted_content">"请输入消息内容(文字或图片)"</string>
+    <string name="send_succeed">"消息发送成功"</string>
+    <string name="send_failed">"消息发送失败"</string>
+
+    <string name="bulletin_empty">"没有接收到消息，请稍后下拉刷新"</string>
+    <string name="sender_info">"若要发送消息，请先在'我的'里面进行登录或注册"</string>
 
     <string name="network_title">"网络连接提示"</string>
     <string name="network_explain">"设备没有连接网络，请点击下面按钮进行相应网络的连接设置。"</string>

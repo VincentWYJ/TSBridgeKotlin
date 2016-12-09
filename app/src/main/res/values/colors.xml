@@ -24,4 +24,7 @@
     <color name="sendTitle">#FF000000</color>
     <color name="mSendContent">#8A000000</color>
 
+    <color name="btn_pressed">#FF5B8872</color>
+    <color name="btn_normal">#FF5BBD72</color>
+
 </resources>

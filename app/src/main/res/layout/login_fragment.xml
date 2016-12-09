@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/send_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/sendBg"
+    android:paddingTop="@dimen/send_padding"
+    tools:context=".activity.MainActivity">
+
+    <TextView android:id="@+id/login_name_t"
+        style="@style/SendTitle"
+        android:text="@string/login_name" />
+
+    <EditText android:id="@+id/login_name"
+        style="@style/SendContent"
+        android:layout_below="@id/login_name_t"
+        android:hint="@string/login_name_hint" />
+
+    <TextView android:id="@+id/login_psw_t"
+        style="@style/SendTitle"
+        android:layout_below="@id/login_name"
+        android:layout_marginTop="@dimen/send_item_margin"
+        android:text="@string/login_psw" />
+
+    <EditText android:id="@+id/login_psw"
+        style="@style/SendContent"
+        android:layout_below="@id/login_psw_t"
+        android:inputType="textPassword"
+        android:hint="@string/login_psw_hint" />
+
+    <CheckBox android:id="@+id/login_psw_check"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignTop="@id/login_psw_t" />
+
+    <Button android:id="@+id/login_image_sel"
+        style="@style/SendButton"
+        android:layout_below="@id/login_psw"
+        android:text="@string/login_image" />
+
+    <com.tsbridge.view.CircleImageView  android:id="@+id/login_image"
+        android:layout_width="@dimen/login_image_width"
+        android:layout_height="@dimen/login_image_width"
+        android:src="@drawable/black"
+        android:layout_below="@id/login_image_sel"
+        android:layout_marginTop="@dimen/btn_image"
+        android:layout_centerHorizontal="true"
+        app:circle_border_color="#ff0000"
+        app:circle_border_width="5dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <Button android:id="@+id/login_in"
+            style="@style/SendButton"
+            android:width="0dp"
+            android:layout_weight="0.33"
+            android:text="@string/login_in" />
+
+        <Button android:id="@+id/login_reg"
+                style="@style/SendButton"
+                android:width="0dp"
+                android:layout_weight="0.33"
+                android:layout_marginStart="@dimen/btn_margin"
+                android:text="@string/login_reg" />
+
+        <Button android:id="@+id/login_out"
+                style="@style/SendButton"
+                android:width="0dp"
+                android:layout_weight="0.33"
+                android:layout_marginStart="@dimen/btn_margin"
+                android:text="@string/login_out" />
+
+    </LinearLayout>
+
+</RelativeLayout>

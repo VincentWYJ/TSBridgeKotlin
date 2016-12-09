@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/send_layout"
     android:layout_width="match_parent"
@@ -23,27 +23,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:padding="@dimen/send_padding"
+            android:paddingTop="@dimen/send_padding"
+            android:paddingBottom="@dimen/send_padding"
             android:gravity="center">
-
-            <TextView
-                style="@style/SendTitle"
-                android:text="@string/send_name" />
-
-            <EditText android:id="@+id/send_name"
-                style="@style/SendContent"
-                android:hint="@string/send_name_hint" />
-
-            <TextView
-                style="@style/SendTitle"
-                android:layout_marginTop="@dimen/send_item_margin"
-                android:text="@string/send_time"
-                android:visibility="gone" />
-
-            <EditText android:id="@+id/send_time"
-                style="@style/SendContent"
-                android:hint="@string/send_name_hint"
-                android:visibility="gone" />
 
             <TextView
                 style="@style/SendTitle"
@@ -56,7 +38,9 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/send_item_margin">
+
                     <Button android:id="@+id/send_image_sel"
                         style="@style/SendButton"
                         android:width="0dp"
@@ -67,16 +51,10 @@
                         style="@style/SendButton"
                         android:width="0dp"
                         android:layout_weight="0.7"
-                        android:layout_marginStart="10dp"
+                        android:layout_marginStart="@dimen/btn_margin"
                         android:text="@string/send_image_del" />
-            </LinearLayout>
 
-            <!--<ImageView android:id="@+id/send_image"-->
-                <!--android:layout_width="@dimen/send_image_width"-->
-                <!--android:layout_height="@dimen/send_image_width"-->
-                <!--android:layout_marginTop="@dimen/btn_image"-->
-                <!--android:scaleType="centerCrop"-->
-                <!--android:src="@drawable/bulletin_image" />-->
+            </LinearLayout>
 
             <com.tsbridge.view.CircleImageView  android:id="@+id/send_image"
                 android:layout_width="@dimen/send_image_width"

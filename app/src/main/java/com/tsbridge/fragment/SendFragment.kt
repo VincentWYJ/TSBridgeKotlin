@@ -11,6 +11,7 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cn.bmob.v3.BmobUser
 import cn.bmob.v3.datatype.BmobFile
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.SaveListener
@@ -61,7 +62,7 @@ class SendFragment: Fragment(), View.OnClickListener {
         val id = view.id
         when (id) {
             R.id.send_image_sel -> selectImageBtn()
-            R.id.send_image_del -> clearImage()
+            R.id.send_image_del -> clearImageBtn()
             R.id.send_btn -> sendBulletinBtn()
             else -> { }
         }
@@ -141,14 +142,14 @@ class SendFragment: Fragment(), View.OnClickListener {
         }
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent) {
+    override fun onActivityResult(requestCode: Int, resultCode: Int, intent: Intent?) {
         super.onActivityResult(requestCode, resultCode, intent)
         Utils.showLog("Back to onActivityResult from getting image")
 
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 SELECT_PIC_KITKAT, SELECT_PIC_LOW -> {
-                    mSendImageUri = intent.data
+                    mSendImageUri = intent?.data
                     if (mSendImageUri != null)
                         imagePreview(mSendImageUri!!)
                     else
@@ -168,7 +169,7 @@ class SendFragment: Fragment(), View.OnClickListener {
         Glide.with(activity.applicationContext).load(picturePath).into(send_image)
     }
 
-    private fun clearImage() {
+    private fun clearImageBtn() {
         if (mSendImageUri != null) {
             mSendImageUri = null
             send_image.setImageResource(R.drawable.black)
@@ -183,6 +184,55 @@ class SendFragment: Fragment(), View.OnClickListener {
             mIsBackFromNetwork = true
             startActivity(Intent(activity, NetworkActivity::class.java))
         }
+    }
+
+    private fun insertItem() {
+        /** 发送者名称需要从其用户信息中读取，故只有注册用户才能发送 */
+        if (BmobUser.getCurrentUser() != null)
+            mSendName = BmobUser.getCurrentUser().username
+        mSendContent = send_content.text.toString()
+        if (TextUtils.isEmpty(mSendName)) {
+            Utils.showToast(activity, activity.getString(R.string.sender_info))
+            return
+        } else if (TextUtils.isEmpty(mSendContent) && mSendImageUri == null) {
+            Utils.showToast(activity, activity.getString(R.string.no_inputted_content))
+            return
+        }
+        if (mSendImageUri != null) {
+            /** 获取路径一定要用 Utils 中定义的方法，如果使用 uri.path 不同 SDK 结果不同 */
+            val file = BmobFile(File(Utils.getPath(activity, mSendImageUri!!)))
+            file.uploadblock(object : UploadFileListener() {
+                override fun done(e: BmobException?) {
+                    if (e == null) {
+                        Utils.showLog("Upload image succeed")
+
+                        insertItemToBulletin(file)
+                    } else {
+                        Utils.showLog("Upload image failed: " + e.message + " Error code: " + e.errorCode)
+                        Utils.showToast(activity,
+                                activity.getString(R.string.send_failed))
+                    }
+                }
+            })
+        } else
+            insertItemToBulletin(null)
+    }
+
+    fun insertItemToBulletin(file: BmobFile?) {
+        val bulletin = Bulletin(mSendName, mSendContent, file)
+        bulletin.save(object: SaveListener<String>() {
+            override fun done(objectId: String, e: BmobException?) {
+                if (e == null) {
+                    Utils.showLog("Insert bulletin succeed: " + objectId)
+                    Utils.showToast(activity,
+                            activity.getString(R.string.send_succeed))
+                } else {
+                    Utils.showLog("Insert bulletin failed: " + e.message + " Error code: " + e.errorCode)
+                    Utils.showToast(activity,
+                            activity.getString(R.string.send_failed))
+                }
+            }
+        })
     }
 
     override fun onResume() {
@@ -212,50 +262,6 @@ class SendFragment: Fragment(), View.OnClickListener {
                 Utils.showToast(activity, activity.getString(R.string.permission_denied))
             }
         }
-    }
-
-    private fun insertItem() {
-        mSendName = send_name.text.toString()
-        mSendContent = send_content.text.toString()
-        if (TextUtils.isEmpty(mSendName) ||
-                (TextUtils.isEmpty(mSendContent) && mSendImageUri == null)) {
-            Utils.showToast(activity, activity.getString(R.string.no_inputted_content))
-            return
-        }
-        if (mSendImageUri != null) {
-            /** 获取路径一定要用 Utils 中定义的方法，如果使用 uri.path 不同 SDK 结果不同 */
-            val file = BmobFile(File(Utils.getPath(activity, mSendImageUri!!)))
-            file.uploadblock(object : UploadFileListener() {
-                override fun done(e: BmobException?) {
-                    if (e == null) {
-                        Utils.showLog("Upload image succeed")
-                        insertItemToBulletin(file)
-                    } else {
-                        Utils.showLog("Upload image failed: " + e.message + " Error code: " + e.errorCode)
-                        Utils.showToast(activity,
-                                activity.getString(R.string.send_failed))
-                    }
-                }
-            })
-        } else
-            insertItemToBulletin(null)
-    }
-
-    fun insertItemToBulletin(file: BmobFile?) {
-        val bulletin = Bulletin(mSendName, mSendContent, file)
-        bulletin.save(object: SaveListener<String>() {
-            override fun done(objectId: String, e: BmobException?) {
-                if (e == null) {
-                    Utils.showLog("Insert bulletin succeed: " + objectId)
-                    Utils.showToast(activity,
-                            activity.getString(R.string.send_succeed))
-                } else {
-                    Utils.showLog("Insert bulletin failed: " + e.message + " Error code: " + e.errorCode)
-                    Utils.showToast(activity,
-                            activity.getString(R.string.send_failed))
-                }
-            }
-        })
     }
 
     override fun onDestroyView() {

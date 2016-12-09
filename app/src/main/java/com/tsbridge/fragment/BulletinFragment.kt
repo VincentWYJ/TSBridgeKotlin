@@ -148,9 +148,12 @@ class BulletinFragment: Fragment() {
                     }
                     if (mBulletins.size > mBulletinCount) {
                         mBulletinCount = mBulletins.size
-
                         mBulletinAdapter?.notifyDataSetChanged()
                     }
+                    if (mBulletins.size == 0 && bulletin_empty.visibility == View.GONE)
+                        bulletin_empty.visibility = View.VISIBLE
+                    else if (mBulletins.size > 0 && bulletin_empty.visibility == View.VISIBLE)
+                        bulletin_empty.visibility = View.GONE
                 } else
                     Utils.showLog("失败: " + e.message + "," + e.errorCode)
                 bulletin_refresh.isRefreshing = false

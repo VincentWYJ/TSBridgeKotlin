@@ -1,7 +1,5 @@
 package com.tsbridge.entity
 
-import cn.bmob.v3.BmobObject
-
 /**
  * teacherName String 发布者名称
  * bulletinTime String 发布时间
@@ -13,7 +11,7 @@ import cn.bmob.v3.BmobObject
 class ReceiveBulletin(val teacherName: String,
                       val bulletinTime: String,
                       val bulletinContent: String?,
-                      val bulletinImage: String?): BmobObject() {
+                      val bulletinImage: String?) {
     init {
         //Utils.showLog("Create a ReceiveBulletin object")
     }
