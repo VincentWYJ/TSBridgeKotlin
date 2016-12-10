@@ -2,6 +2,7 @@ package com.tsbridge.utils
 
 import android.Manifest
 import android.annotation.TargetApi
+import android.app.ProgressDialog
 import android.content.ContentUris
 import android.content.Context
 import android.content.DialogInterface
@@ -18,8 +19,18 @@ import android.provider.Settings
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.util.Log
+import android.view.Gravity
+import android.view.View
+import android.widget.ImageView
 import android.widget.Toast
+import cn.bmob.v3.BmobQuery
+import cn.bmob.v3.BmobUser
+import cn.bmob.v3.exception.BmobException
+import cn.bmob.v3.listener.FindListener
+import com.bumptech.glide.Glide
 import com.tsbridge.R
+import com.tsbridge.entity.User
+import kotlinx.android.synthetic.main.login_fragment.*
 
 object Utils {
     init {
@@ -38,6 +49,23 @@ object Utils {
     /** 打印日志，若 message 为 null，那么调用 toString() 后返回 "null" */
     fun showLog(message: Any?) {
         Log.i(LOG_TAG, message?.toString())
+    }
+
+    fun setImage(context: Context, username: String, imageview: ImageView) {
+        val query = BmobQuery<User>()
+        query.addWhereEqualTo("username", username)
+        query.findObjects(object: FindListener<User>() {
+            override fun done(`object`: List<User>, e: BmobException?) {
+                if (e == null) {
+                    showLog("查询成功: 共" + `object`.size + "条数据")
+
+                    Glide.with(context.applicationContext)
+                            .load(`object`[0].imageFile?.fileUrl)
+                            .into(imageview)
+                } else
+                    showLog("失败: " + e.message + "," + e.errorCode)
+            }
+        })
     }
 
     /**

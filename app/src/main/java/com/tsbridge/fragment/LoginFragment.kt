@@ -1,8 +1,10 @@
 package com.tsbridge.fragment
 
 import android.app.Activity
+import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
@@ -14,17 +16,22 @@ import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.BmobUser
 import cn.bmob.v3.datatype.BmobFile
 import cn.bmob.v3.exception.BmobException
+import cn.bmob.v3.listener.FindListener
 import cn.bmob.v3.listener.SaveListener
 import cn.bmob.v3.listener.UploadFileListener
 import com.bumptech.glide.Glide
 import com.tsbridge.R
 import com.tsbridge.activity.NetworkActivity
 import com.tsbridge.activity.PermissionActivity
+import com.tsbridge.entity.Bulletin
+import com.tsbridge.entity.ReceiveBulletin
 import com.tsbridge.entity.User
 import com.tsbridge.utils.Utils
+import kotlinx.android.synthetic.main.bulletin_fragment.*
 import kotlinx.android.synthetic.main.login_fragment.*
 import org.jetbrains.anko.onCheckedChange
 import java.io.File
@@ -73,6 +80,7 @@ class LoginFragment: Fragment(), View.OnClickListener {
             Selection.setSelection(psw, psw.length)
         }
 
+        /** 如果用户已登录，则显示名称与头像信息 */
         setLoginInfo()
     }
 
@@ -90,16 +98,8 @@ class LoginFragment: Fragment(), View.OnClickListener {
     private fun setLoginInfo() {
         if(BmobUser.getCurrentUser() != null) {
             login_name.setText(BmobUser.getCurrentUser().username)
-//            Glide.with(activity)
-//                    .load((BmobUser.getObjectByKey("imageFile") as BmobFile).fileUrl)
-//                    .into(login_image)
-        } else {
-            login_name.setText("")
-            Glide.with(activity)
-                    .load(R.drawable.black)
-                    .into(login_image)
+            Utils.setImage(activity, BmobUser.getCurrentUser().username, login_image)
         }
-        login_psw.setText("")
     }
 
     /**
@@ -225,7 +225,8 @@ class LoginFragment: Fragment(), View.OnClickListener {
         /** 发送者名称需要从其用户信息中读取，故只有注册用户才能发送 */
         mLoginName = login_name.text.toString()
         mLoginPsw = login_psw.text.toString()
-        if (TextUtils.isEmpty(mLoginName) || TextUtils.isEmpty(mLoginPsw) || mLoginImageUri == null) {
+        if (TextUtils.isEmpty(mLoginName) || TextUtils.isEmpty(mLoginPsw)
+                || mLoginImageUri == null) {
             Utils.showToast(activity, activity.getString(R.string.login_info_3))
             return
         }
@@ -238,7 +239,8 @@ class LoginFragment: Fragment(), View.OnClickListener {
 
                     insertItemToUser(file)
                 } else {
-                    Utils.showLog("Upload image failed: " + e.message + " Error code: " + e.errorCode)
+                    Utils.showLog("Upload image failed: " + e.message
+                            + " Error code: " + e.errorCode)
                     Utils.showToast(activity,
                             activity.getString(R.string.login_reg_failed))
                 }
@@ -257,11 +259,12 @@ class LoginFragment: Fragment(), View.OnClickListener {
                     Utils.showToast(activity,
                             activity.getString(R.string.login_reg_succeed))
 
-                    setLoginInfo()
+                    login_psw.setText("")
                 } else {
-                    Utils.showLog("Register User failed: " + e?.message + " Error code: " + e?.errorCode)
+                    Utils.showLog("Register User failed: " + e?.message
+                            + " Error code: " + e?.errorCode)
                     Utils.showToast(activity,
-                            activity.getString(R.string.login_reg_failed))
+                            activity.getString(R.string.login_reg_failed)+ ": " + e?.message)
                 }
             }
         })
@@ -298,11 +301,12 @@ class LoginFragment: Fragment(), View.OnClickListener {
                     Utils.showToast(activity,
                             activity.getString(R.string.login_in_succeed))
 
+                    login_psw.setText("")
                     setLoginInfo()
                 } else {
                     Utils.showLog("Login in failed: " + e?.message + " Error code: " + e?.errorCode)
                     Utils.showToast(activity,
-                            activity.getString(R.string.login_in_failed))
+                            activity.getString(R.string.login_in_failed)+ ": " + e?.message)
                 }
             }
         })
@@ -329,7 +333,10 @@ class LoginFragment: Fragment(), View.OnClickListener {
         Utils.showToast(activity,
                 activity.getString(R.string.login_out_succeed))
 
-        setLoginInfo()
+        login_name.setText("")
+        Glide.with(activity.applicationContext)
+                .load(R.drawable.black)
+                .into(login_image)
     }
 
     override fun onResume() {
