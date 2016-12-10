@@ -146,6 +146,16 @@ class BulletinFragment: Fragment() {
                         else
                             mBulletins.add(bulletinT)
                     }
+//                    `object`.map {
+//                        var bulletinT = ReceiveBulletin(it.teacherName,
+//                                it.updatedAt,
+//                                it.bulletinContent,
+//                                it.bulletinImage?.fileUrl)
+//                        if (mIsRefreshingFromPullDown)
+//                            mBulletins.add(0, bulletinT)
+//                        else
+//                            mBulletins.add(bulletinT)
+//                    }
                     if (mBulletins.size > mBulletinCount) {
                         mBulletinCount = mBulletins.size
                         mBulletinAdapter?.notifyDataSetChanged()

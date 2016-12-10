@@ -51,21 +51,29 @@ object Utils {
         Log.i(LOG_TAG, message?.toString())
     }
 
-    fun setImage(context: Context, username: String, imageview: ImageView) {
-        val query = BmobQuery<User>()
-        query.addWhereEqualTo("username", username)
-        query.findObjects(object: FindListener<User>() {
-            override fun done(`object`: List<User>, e: BmobException?) {
-                if (e == null) {
-                    showLog("查询成功: 共" + `object`.size + "条数据")
+    fun setImageToView(context: Context, username: String?, imageuri: String?, imageview: ImageView) {
+        if (username != null) {
+            val query = BmobQuery<User>()
+            query.addWhereEqualTo("username", username)
+            query.findObjects(object : FindListener<User>() {
+                override fun done(`object`: List<User>, e: BmobException?) {
+                    if (e == null) {
+                        showLog("查询成功: 共" + `object`.size + "条数据")
 
-                    Glide.with(context.applicationContext)
-                            .load(`object`[0].imageFile?.fileUrl)
-                            .into(imageview)
-                } else
-                    showLog("失败: " + e.message + "," + e.errorCode)
-            }
-        })
+                        if (`object`.size > 0)
+                            Glide.with(context.applicationContext)
+                                    .load(`object`[0].imageFile?.fileUrl)
+                                    .into(imageview)
+                        else
+                            showLog("用户$username?不存在了")
+                    } else
+                        showLog("失败: " + e.message + "," + e.errorCode)
+                }
+            })
+        } else if (imageuri != null)
+            Glide.with(context.applicationContext).load(imageuri).into(imageview)
+        else
+            Glide.with(context.applicationContext).load(R.drawable.black).into(imageview)
     }
 
     /**

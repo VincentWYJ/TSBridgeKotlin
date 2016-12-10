@@ -98,7 +98,7 @@ class LoginFragment: Fragment(), View.OnClickListener {
     private fun setLoginInfo() {
         if(BmobUser.getCurrentUser() != null) {
             login_name.setText(BmobUser.getCurrentUser().username)
-            Utils.setImage(activity, BmobUser.getCurrentUser().username, login_image)
+            Utils.setImageToView(activity, BmobUser.getCurrentUser().username, null, login_image)
         }
     }
 
@@ -204,7 +204,7 @@ class LoginFragment: Fragment(), View.OnClickListener {
     private fun imagePreview(uri: Uri) {
         var picturePath = Utils.getPath(activity, uri)
         Utils.showLog(picturePath)
-        Glide.with(activity.applicationContext).load(picturePath).into(login_image)
+        Utils.setImageToView(activity, null, picturePath, login_image)
     }
 
     /** 用户注册 */
@@ -334,9 +334,7 @@ class LoginFragment: Fragment(), View.OnClickListener {
                 activity.getString(R.string.login_out_succeed))
 
         login_name.setText("")
-        Glide.with(activity.applicationContext)
-                .load(R.drawable.black)
-                .into(login_image)
+        Utils.setImageToView(activity, null, null, login_image)
     }
 
     override fun onResume() {

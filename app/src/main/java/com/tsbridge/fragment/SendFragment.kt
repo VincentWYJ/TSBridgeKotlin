@@ -166,7 +166,7 @@ class SendFragment: Fragment(), View.OnClickListener {
     private fun imagePreview(uri: Uri) {
         var picturePath = Utils.getPath(activity, uri)
         Utils.showLog(picturePath)
-        Glide.with(activity.applicationContext).load(picturePath).into(send_image)
+        Utils.setImageToView(activity, null, picturePath, send_image)
     }
 
     private fun clearImageBtn() {

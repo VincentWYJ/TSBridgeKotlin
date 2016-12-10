@@ -46,7 +46,8 @@ class BulletinAdapter(private val mContext: Context,
             itemView.bulletin_name.text = mBulletins[position].teacherName
             itemView.bulletin_time.text = mBulletins[position].bulletinTime
             itemView.bulletin_content.text = mBulletins[position].bulletinContent
-            Utils.setImage(mContext, mBulletins[position].teacherName,itemView.bulletin_image)
+            Utils.setImageToView(mContext, mBulletins[position].teacherName,
+                    null, itemView.bulletin_image)
             /** 若公告图片内容为 null ，则隐藏让其不可点击 */
             if (mBulletins[position].bulletinImage == null)
                 itemView.bulletin_content_image.visibility = View.GONE
@@ -55,9 +56,8 @@ class BulletinAdapter(private val mContext: Context,
                 itemView.bulletin_content_image.onClick {
                     showFullImage(mBulletins[position].bulletinImage)
                 }
-                Glide.with(mContext.applicationContext)
-                        .load(mBulletins[position].bulletinImage)
-                        .into(itemView.bulletin_content_image)
+                Utils.setImageToView(mContext, null, mBulletins[position].bulletinImage,
+                         itemView.bulletin_content_image)
             }
             /**
              * Check if this is the last child, if yes then hide the divider, remember -1
@@ -73,7 +73,7 @@ class BulletinAdapter(private val mContext: Context,
             val dialog = Dialog(mContext, R.style.DialogTitle)
             dialog.setContentView(mContext.linearLayout {
                 imageView {
-                    Glide.with(mContext.applicationContext).load(imageUri).into(this)
+                    Utils.setImageToView(mContext, null, imageUri, this)
                     onClick {
                         dialog.dismiss()
                     }
