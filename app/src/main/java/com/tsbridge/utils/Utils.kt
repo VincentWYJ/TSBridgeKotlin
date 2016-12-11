@@ -2,7 +2,6 @@ package com.tsbridge.utils
 
 import android.Manifest
 import android.annotation.TargetApi
-import android.app.ProgressDialog
 import android.content.ContentUris
 import android.content.Context
 import android.content.DialogInterface
@@ -19,18 +18,17 @@ import android.provider.Settings
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AlertDialog
 import android.util.Log
-import android.view.Gravity
-import android.view.View
 import android.widget.ImageView
 import android.widget.Toast
 import cn.bmob.v3.BmobQuery
-import cn.bmob.v3.BmobUser
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.FindListener
 import com.bumptech.glide.Glide
 import com.tsbridge.R
 import com.tsbridge.entity.User
-import kotlinx.android.synthetic.main.login_fragment.*
+import android.os.Looper.getMainLooper
+import android.os.Handler
+
 
 object Utils {
     init {
@@ -40,10 +38,12 @@ object Utils {
     val LOG_TAG = "TSBridge"
 
     /** 可以直接使用 Anko 提供的 toast(message: CharSequence) 方法
-     * 注：需要 Context 上下文环境
+     * 注：不管用何种方式，均需要 Context 上下文环境
      * */
     fun showToast(context: Context, message: Any) {
-        Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT).show()
+        Handler(getMainLooper()).post({
+            Toast.makeText(context, message.toString(), Toast.LENGTH_SHORT).show()
+        })
     }
 
     /** 打印日志，若 message 为 null，那么调用 toString() 后返回 "null" */
@@ -58,7 +58,7 @@ object Utils {
             query.findObjects(object : FindListener<User>() {
                 override fun done(`object`: List<User>, e: BmobException?) {
                     if (e == null) {
-                        showLog("查询成功: 共" + `object`.size + "条数据")
+                        showLog("查询成功: 共" + `object`.size + "条User数据")
 
                         if (`object`.size > 0)
                             Glide.with(context.applicationContext)

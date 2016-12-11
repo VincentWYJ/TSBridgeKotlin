@@ -6,17 +6,10 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import cn.bmob.v3.BmobQuery
-import cn.bmob.v3.BmobUser
-import cn.bmob.v3.exception.BmobException
-import cn.bmob.v3.listener.FindListener
-import com.bumptech.glide.Glide
 import com.tsbridge.R
 import com.tsbridge.entity.ReceiveBulletin
-import com.tsbridge.entity.User
 import com.tsbridge.utils.Utils
 import kotlinx.android.synthetic.main.bulletin_item.view.*
-import kotlinx.android.synthetic.main.login_fragment.*
 import org.jetbrains.anko.imageView
 import org.jetbrains.anko.linearLayout
 import org.jetbrains.anko.onClick

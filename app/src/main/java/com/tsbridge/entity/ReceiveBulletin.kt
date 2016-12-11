@@ -10,7 +10,7 @@ package com.tsbridge.entity
  */
 class ReceiveBulletin(val teacherName: String,
                       val bulletinTime: String,
-                      val bulletinContent: String?,
+                      val bulletinContent: String,
                       val bulletinImage: String?) {
     init {
         //Utils.showLog("Create a ReceiveBulletin object")

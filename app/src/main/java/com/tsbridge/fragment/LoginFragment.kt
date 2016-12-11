@@ -1,10 +1,8 @@
 package com.tsbridge.fragment
 
 import android.app.Activity
-import android.app.ProgressDialog
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
@@ -16,22 +14,16 @@ import android.text.method.PasswordTransformationMethod
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import cn.bmob.v3.BmobQuery
 import cn.bmob.v3.BmobUser
 import cn.bmob.v3.datatype.BmobFile
 import cn.bmob.v3.exception.BmobException
-import cn.bmob.v3.listener.FindListener
 import cn.bmob.v3.listener.SaveListener
 import cn.bmob.v3.listener.UploadFileListener
-import com.bumptech.glide.Glide
 import com.tsbridge.R
 import com.tsbridge.activity.NetworkActivity
 import com.tsbridge.activity.PermissionActivity
-import com.tsbridge.entity.Bulletin
-import com.tsbridge.entity.ReceiveBulletin
 import com.tsbridge.entity.User
 import com.tsbridge.utils.Utils
-import kotlinx.android.synthetic.main.bulletin_fragment.*
 import kotlinx.android.synthetic.main.login_fragment.*
 import org.jetbrains.anko.onCheckedChange
 import java.io.File

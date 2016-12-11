@@ -12,7 +12,7 @@ import com.tsbridge.utils.Utils
  * 如 SendFragment 类中调用 Bmob 方法保存 Bulletin 对象(存入云数据库)时，要访问对应的列键-值
  */
 class Bulletin(val teacherName: String,
-               val bulletinContent: String?,
+               val bulletinContent: String,
                val bulletinImage: BmobFile?): BmobObject() {
     init {
         Utils.showLog("Create a Bulletin object")

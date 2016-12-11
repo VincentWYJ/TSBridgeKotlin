@@ -34,3 +34,8 @@
 只有登录用户才能才送消息，而接收则没有此要求；
 
 11、消息的用户头像部分设置成圆形；
+
+12、Utils 中 Toast 显示放置在 Handler 中执行，
+也可以直接利用 Kotlin-Anko 提供的 toast()，但是都需要 Context 上下文环境；
+
+13、BulletinFragment 读取查询到的 Bulletin 信息时由 for 改成了 map实现；

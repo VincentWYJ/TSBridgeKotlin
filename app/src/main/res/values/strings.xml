@@ -39,6 +39,7 @@
     <string name="no_selected_image">"没有选择图片"</string>
     <string name="no_connected_network">""网络未连接成功""</string>
     <string name="no_inputted_content">"请输入消息内容(文字或图片)"</string>
+    <string name="no_content_text">"无文字内容"</string>
     <string name="send_succeed">"消息发送成功"</string>
     <string name="send_failed">"消息发送失败"</string>
 

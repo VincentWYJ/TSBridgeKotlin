@@ -16,7 +16,6 @@ import cn.bmob.v3.datatype.BmobFile
 import cn.bmob.v3.exception.BmobException
 import cn.bmob.v3.listener.SaveListener
 import cn.bmob.v3.listener.UploadFileListener
-import com.bumptech.glide.Glide
 import com.tsbridge.R
 import com.tsbridge.activity.NetworkActivity
 import com.tsbridge.activity.PermissionActivity
@@ -30,7 +29,7 @@ class SendFragment: Fragment(), View.OnClickListener {
     private val SELECT_PIC_KITKAT = 122
 
     private var mSendName = ""
-    private var mSendContent: String? = null
+    private var mSendContent = ""
     private var mSendImageUri: Uri? = null
 
     private var mIsBackFromNetwork = false
@@ -198,6 +197,8 @@ class SendFragment: Fragment(), View.OnClickListener {
             Utils.showToast(activity, activity.getString(R.string.no_inputted_content))
             return
         }
+        if (TextUtils.isEmpty(mSendContent))
+            mSendContent = activity.getString(R.string.no_content_text)
         if (mSendImageUri != null) {
             /** 获取路径一定要用 Utils 中定义的方法，如果使用 uri.path 不同 SDK 结果不同 */
             val file = BmobFile(File(Utils.getPath(activity, mSendImageUri!!)))

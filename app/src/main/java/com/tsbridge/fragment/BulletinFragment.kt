@@ -134,28 +134,18 @@ class BulletinFragment: Fragment() {
         query.findObjects(object: FindListener<Bulletin>() {
             override fun done(`object`: List<Bulletin>, e: BmobException?) {
                 if (e == null) {
-                    Utils.showLog("查询成功: 共" + `object`.size + "条数据")
+                    Utils.showLog("查询成功: 共" + `object`.size + "条Bulletin数据")
 
-                    for (bulletin in `object`) {
-                        var bulletinT = ReceiveBulletin(bulletin.teacherName,
-                                bulletin.updatedAt,
-                                bulletin.bulletinContent,
-                                bulletin.bulletinImage?.fileUrl)
+                    `object`.map {
+                        var bulletinT = ReceiveBulletin(it.teacherName,
+                                it.updatedAt,
+                                it.bulletinContent,
+                                it.bulletinImage?.fileUrl)
                         if (mIsRefreshingFromPullDown)
                             mBulletins.add(0, bulletinT)
                         else
                             mBulletins.add(bulletinT)
                     }
-//                    `object`.map {
-//                        var bulletinT = ReceiveBulletin(it.teacherName,
-//                                it.updatedAt,
-//                                it.bulletinContent,
-//                                it.bulletinImage?.fileUrl)
-//                        if (mIsRefreshingFromPullDown)
-//                            mBulletins.add(0, bulletinT)
-//                        else
-//                            mBulletins.add(bulletinT)
-//                    }
                     if (mBulletins.size > mBulletinCount) {
                         mBulletinCount = mBulletins.size
                         mBulletinAdapter?.notifyDataSetChanged()
