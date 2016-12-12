@@ -9,7 +9,7 @@ android {
     useLibrary 'org.apache.http.legacy'
     defaultConfig {
         applicationId "com.tsbridge"
-        minSdkVersion 18
+        minSdkVersion 21
         targetSdkVersion 24
         versionCode 1
         versionName "1.0"
@@ -21,10 +21,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    productFlavors {
+    }
 }
 
 dependencies {
-    provided fileTree(dir: 'libs', include: ['*.jar'])
+    provided fileTree(include: ['*.jar'], dir: 'libs')
     testCompile 'junit:junit:4.12'
     compile('com.android.support:appcompat-v7:24.+') {
         exclude group: "com.android.supprot", module: "support-v4"

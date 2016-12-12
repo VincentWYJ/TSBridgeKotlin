@@ -9,7 +9,7 @@ import com.tsbridge.R
 import com.tsbridge.utils.Utils
 import kotlinx.android.synthetic.main.network_activity.*
 
-class NetworkActivity : AppCompatActivity(), View.OnClickListener {
+class NetworkActivity: AppCompatActivity(), View.OnClickListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Utils.showLog("NetworkActivity created")

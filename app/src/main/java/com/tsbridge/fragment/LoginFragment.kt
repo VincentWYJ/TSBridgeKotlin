@@ -71,9 +71,6 @@ class LoginFragment: Fragment(), View.OnClickListener {
             var psw = login_psw.text
             Selection.setSelection(psw, psw.length)
         }
-
-        /** 如果用户已登录，则显示名称与头像信息 */
-        setLoginInfo()
     }
 
     override fun onClick(view: View) {
@@ -224,7 +221,7 @@ class LoginFragment: Fragment(), View.OnClickListener {
         }
         /** 获取路径一定要用 Utils 中定义的方法，如果使用 uri.path 不同 SDK 结果不同 */
         val file = BmobFile(File(Utils.getPath(activity, mLoginImageUri!!)))
-        file.uploadblock(object : UploadFileListener() {
+        file.uploadblock(object: UploadFileListener() {
             override fun done(e: BmobException?) {
                 if (e == null) {
                     Utils.showLog("Upload image succeed")
@@ -244,7 +241,7 @@ class LoginFragment: Fragment(), View.OnClickListener {
         val user = User(file)
         user.username = mLoginName
         user.setPassword(mLoginPsw)
-        user.signUp(object : SaveListener<User>() {
+        user.signUp(object: SaveListener<User>() {
             override fun done(s: User?, e: BmobException?) {
                 if (s != null && e == null) {
                     Utils.showLog("Register User succeed")
@@ -286,7 +283,7 @@ class LoginFragment: Fragment(), View.OnClickListener {
         var user = User(null)
         user.username = mLoginName
         user.setPassword(mLoginPsw)
-        user.login(object : SaveListener<User>() {
+        user.login(object: SaveListener<User>() {
             override fun done(s: User?, e: BmobException?) {
                 if (s != null && e == null) {
                     Utils.showLog("Login in succeed")
@@ -332,6 +329,10 @@ class LoginFragment: Fragment(), View.OnClickListener {
     override fun onResume() {
         super.onResume()
         Utils.showLog("LoginFragment onResume")
+
+        /** 如果用户已登录，则显示名称与头像信息 */
+        if (Utils.isNetWorkConnected(activity))
+            setLoginInfo()
 
         /** 新打开的 Activity 在当前 onResume 执行后才开始创建 */
         if (mIsBackFromNetworkReg && Utils.mIsBackFromSetNetwork) {

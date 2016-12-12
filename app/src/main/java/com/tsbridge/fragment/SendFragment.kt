@@ -80,10 +80,10 @@ class SendFragment: Fragment(), View.OnClickListener {
             var permissionAccessTimes = Utils.getPermissionAccessTimes(activity,
                     Utils.EXTERNAL_STORAGE_PERMISSION_ACCESS_TIMES_KEY,
                     1)
+            /** 用户拒绝了权限申请并选择了不再显示 */
             if (permissionAccessTimes > 1 &&
                     !ActivityCompat.shouldShowRequestPermissionRationale(activity,
                     Utils.EXTERNAL_STORAGE_PERMISSION)) {
-                /** 用户拒绝了权限申请并选择了不再显示 */
                 mIsBackFromPermission = true
                 val intent = Intent(activity, PermissionActivity::class.java)
                 intent.putExtra(Utils.PERMISSION_TITLE,
@@ -105,9 +105,8 @@ class SendFragment: Fragment(), View.OnClickListener {
             requestPermissions(arrayOf(Utils.EXTERNAL_STORAGE_PERMISSION),
                     Utils.REQUEST_CODE_ASK_EXTERNAL_STORAGE_PERMISSION)
             return
-        } else {
-            selectImage()
         }
+        selectImage()
     }
 
     override fun onRequestPermissionsResult(requestCode: Int,
@@ -202,7 +201,7 @@ class SendFragment: Fragment(), View.OnClickListener {
         if (mSendImageUri != null) {
             /** 获取路径一定要用 Utils 中定义的方法，如果使用 uri.path 不同 SDK 结果不同 */
             val file = BmobFile(File(Utils.getPath(activity, mSendImageUri!!)))
-            file.uploadblock(object : UploadFileListener() {
+            file.uploadblock(object: UploadFileListener() {
                 override fun done(e: BmobException?) {
                     if (e == null) {
                         Utils.showLog("Upload image succeed")

@@ -63,7 +63,7 @@ class BulletinAdapter(private val mContext: Context,
         }
 
         private fun showFullImage(imageUri: String?) {
-            val dialog = Dialog(mContext, R.style.DialogTitle)
+            val dialog = Dialog(mContext, R.style.DialogNoTitle)
             dialog.setContentView(mContext.linearLayout {
                 imageView {
                     Utils.setImageToView(mContext, null, imageUri, this)

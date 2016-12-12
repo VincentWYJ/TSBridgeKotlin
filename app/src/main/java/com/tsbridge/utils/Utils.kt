@@ -11,6 +11,8 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.os.Handler
+import android.os.Looper.getMainLooper
 import android.preference.PreferenceManager
 import android.provider.DocumentsContract
 import android.provider.MediaStore
@@ -26,8 +28,6 @@ import cn.bmob.v3.listener.FindListener
 import com.bumptech.glide.Glide
 import com.tsbridge.R
 import com.tsbridge.entity.User
-import android.os.Looper.getMainLooper
-import android.os.Handler
 
 
 object Utils {
@@ -55,7 +55,7 @@ object Utils {
         if (username != null) {
             val query = BmobQuery<User>()
             query.addWhereEqualTo("username", username)
-            query.findObjects(object : FindListener<User>() {
+            query.findObjects(object: FindListener<User>() {
                 override fun done(`object`: List<User>, e: BmobException?) {
                     if (e == null) {
                         showLog("查询成功: 共" + `object`.size + "条User数据")

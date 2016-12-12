@@ -39,3 +39,7 @@
 也可以直接利用 Kotlin-Anko 提供的 toast()，但是都需要 Context 上下文环境；
 
 13、BulletinFragment 读取查询到的 Bulletin 信息时由 for 改成了 map实现；
+
+14、Utils setImageToView 方法在没有网络的情况下会异常，
+query.findObjects(object : FindListener<User>(){...}) 不接收 null 参数，
+所以在准备加载图片之前需要进行网络判断；
