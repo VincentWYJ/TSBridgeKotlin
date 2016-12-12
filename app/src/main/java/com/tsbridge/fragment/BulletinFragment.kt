@@ -25,7 +25,7 @@ import java.text.ParseException
 import java.text.SimpleDateFormat
 import java.util.*
 
-class BulletinFragment: Fragment() {
+class BulletinFragment : Fragment() {
     private val mBulletins = ArrayList<ReceiveBulletin>()
     private var mBulletinAdapter: BulletinAdapter? = null
 

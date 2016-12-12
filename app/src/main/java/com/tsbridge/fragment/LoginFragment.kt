@@ -28,7 +28,7 @@ import kotlinx.android.synthetic.main.login_fragment.*
 import org.jetbrains.anko.onCheckedChange
 import java.io.File
 
-class LoginFragment: Fragment(), View.OnClickListener {
+class LoginFragment : Fragment(), View.OnClickListener {
     private val SELECT_PIC_LOW = 121
     private val SELECT_PIC_KITKAT = 122
 
@@ -85,9 +85,10 @@ class LoginFragment: Fragment(), View.OnClickListener {
     }
 
     private fun setLoginInfo() {
-        if(BmobUser.getCurrentUser() != null) {
-            login_name.setText(BmobUser.getCurrentUser().username)
-            Utils.setImageToView(activity, BmobUser.getCurrentUser().username, null, login_image)
+        var user = BmobUser.getCurrentUser(User::class.java)
+        if(user != null) {
+            login_name.setText(user.username)
+            Utils.setImageToView(activity, null, user.imageFile?.fileUrl, login_image)
         }
     }
 
@@ -291,7 +292,7 @@ class LoginFragment: Fragment(), View.OnClickListener {
                             activity.getString(R.string.login_in_succeed))
 
                     login_psw.setText("")
-                    setLoginInfo()
+                    Utils.setImageToView(activity, null, s.imageFile?.fileUrl, login_image)
                 } else {
                     Utils.showLog("Login in failed: " + e?.message + " Error code: " + e?.errorCode)
                     Utils.showToast(activity,

@@ -13,7 +13,7 @@ import android.util.AttributeSet
 import android.widget.ImageView
 import com.tsbridge.R
 
-class CircleImageView: ImageView {
+class CircleImageView : ImageView {
     /** 图片显示的模式，按比例缩放图片，使得图片长 (宽)的大于等于视图的相应维度 */
     private val SCALE_TYPE = ImageView.ScaleType.CENTER_CROP
     /**

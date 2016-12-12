@@ -13,7 +13,7 @@ import com.tsbridge.utils.Utils
  */
 class Bulletin(val teacherName: String,
                val bulletinContent: String,
-               val bulletinImage: BmobFile?): BmobObject() {
+               val bulletinImage: BmobFile?) : BmobObject() {
     init {
         Utils.showLog("Create a Bulletin object")
 

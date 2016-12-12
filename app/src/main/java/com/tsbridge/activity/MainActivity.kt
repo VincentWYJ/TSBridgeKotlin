@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.main_activity.*
 import kotlinx.android.synthetic.main.main_content.*
 
 /** 2016.11.29 开始利用 Kotlin 语言编写 Android */
-class MainActivity: AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         Utils.showLog("MainActivity onCreate")

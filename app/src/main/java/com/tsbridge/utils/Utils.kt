@@ -55,7 +55,7 @@ object Utils {
         if (username != null) {
             val query = BmobQuery<User>()
             query.addWhereEqualTo("username", username)
-            query.findObjects(object: FindListener<User>() {
+            query.findObjects(object : FindListener<User>() {
                 override fun done(`object`: List<User>, e: BmobException?) {
                     if (e == null) {
                         showLog("查询成功: 共" + `object`.size + "条User数据")

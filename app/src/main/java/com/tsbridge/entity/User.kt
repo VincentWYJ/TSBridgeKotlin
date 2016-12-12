@@ -11,7 +11,7 @@ import com.tsbridge.utils.Utils
  * 注：在类外部有可能访问成员变量的，需要声明为 var/val，否则访问不到
  * 如 SendFragment 类中调用 Bmob 方法保存 Bulletin 对象(存入云数据库)时，要访问对应的列键-值
  */
-class User(val imageFile: BmobFile?): BmobUser() {
+class User(val imageFile: BmobFile?) : BmobUser() {
     init {
         Utils.showLog("Create a User object")
 

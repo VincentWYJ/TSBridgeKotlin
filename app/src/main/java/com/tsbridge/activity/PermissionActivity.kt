@@ -9,7 +9,7 @@ import com.tsbridge.utils.Utils
 import kotlinx.android.synthetic.main.permission_activity.*
 import org.jetbrains.anko.onClick
 
-class PermissionActivity: AppCompatActivity() {
+class PermissionActivity : AppCompatActivity() {
     private var mPermissionName = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {

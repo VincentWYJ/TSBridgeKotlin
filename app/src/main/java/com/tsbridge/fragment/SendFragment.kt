@@ -24,7 +24,7 @@ import com.tsbridge.utils.Utils
 import kotlinx.android.synthetic.main.send_fragment.*
 import java.io.File
 
-class SendFragment: Fragment(), View.OnClickListener {
+class SendFragment : Fragment(), View.OnClickListener {
     private val SELECT_PIC_LOW = 121
     private val SELECT_PIC_KITKAT = 122
 
@@ -201,7 +201,7 @@ class SendFragment: Fragment(), View.OnClickListener {
         if (mSendImageUri != null) {
             /** 获取路径一定要用 Utils 中定义的方法，如果使用 uri.path 不同 SDK 结果不同 */
             val file = BmobFile(File(Utils.getPath(activity, mSendImageUri!!)))
-            file.uploadblock(object: UploadFileListener() {
+            file.uploadblock(object : UploadFileListener() {
                 override fun done(e: BmobException?) {
                     if (e == null) {
                         Utils.showLog("Upload image succeed")
