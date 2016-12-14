@@ -37,9 +37,10 @@ class LoginFragment : Fragment(), View.OnClickListener {
     private var mLoginPsw = ""
     private var mLoginImageUri: Uri? = null
 
-    private var mIsBackFromNetworkIn = false
-    private var mIsBackFromNetworkReg = false
-    private var mIsBackFromNetworkOut = false
+    private var mIsBackFromOption = 0
+    private val mIsBackFromOptionReg = 1
+    private val mIsBackFromOptionIn = 2
+    private val mIsBackFromOptionOut = 3
     private var mIsBackFromPermission = false
 
     override fun onCreateView(inflater: LayoutInflater,
@@ -202,7 +203,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
         if (Utils.isNetWorkConnected(activity))
             loginReg()
         else {
-            mIsBackFromNetworkReg = true
+            mIsBackFromOption = mIsBackFromOptionReg
             startActivity(Intent(activity, NetworkActivity::class.java))
         }
     }
@@ -265,7 +266,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
         if (Utils.isNetWorkConnected(activity))
             loginIn()
         else {
-            mIsBackFromNetworkIn = true
+            mIsBackFromOption = mIsBackFromOptionIn
             startActivity(Intent(activity, NetworkActivity::class.java))
         }
     }
@@ -307,7 +308,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
         if (Utils.isNetWorkConnected(activity))
             loginOut()
         else {
-            mIsBackFromNetworkOut = true
+            mIsBackFromOption = mIsBackFromOptionOut
             startActivity(Intent(activity, NetworkActivity::class.java))
         }
     }
@@ -336,37 +337,19 @@ class LoginFragment : Fragment(), View.OnClickListener {
             setLoginInfo()
 
         /** 新打开的 Activity 在当前 onResume 执行后才开始创建 */
-        if (mIsBackFromNetworkReg && Utils.mIsBackFromSetNetwork) {
-            mIsBackFromNetworkReg = false
-            Utils.mIsBackFromSetNetwork = false
+        if (mIsBackFromOption > 0 && Utils.mIsBackFromSetNetwork) {
             if (Utils.isNetWorkConnected(activity))
-                loginReg()
+                when (mIsBackFromOption) {
+                    mIsBackFromOptionReg -> loginReg()
+                    mIsBackFromOptionIn -> loginIn()
+                    mIsBackFromOptionOut -> loginOut()
+                }
             else
                 Utils.showToast(activity,
                         activity.getString(R.string.no_connected_network))
-        }
-
-        if (mIsBackFromNetworkIn && Utils.mIsBackFromSetNetwork) {
-            mIsBackFromNetworkIn = false
+            mIsBackFromOption = 0
             Utils.mIsBackFromSetNetwork = false
-            if (Utils.isNetWorkConnected(activity))
-                loginIn()
-            else
-                Utils.showToast(activity,
-                        activity.getString(R.string.no_connected_network))
-        }
-
-        if (mIsBackFromNetworkOut && Utils.mIsBackFromSetNetwork) {
-            mIsBackFromNetworkOut = false
-            Utils.mIsBackFromSetNetwork = false
-            if (Utils.isNetWorkConnected(activity))
-                loginOut()
-            else
-                Utils.showToast(activity,
-                        activity.getString(R.string.no_connected_network))
-        }
-
-        if (mIsBackFromPermission && Utils.mIsBackFromSetPermission) {
+        } else if (mIsBackFromPermission && Utils.mIsBackFromSetPermission) {
             mIsBackFromPermission = false
             Utils.mIsBackFromSetPermission = false
             var storagePermission = Utils.checkPermission(activity,
