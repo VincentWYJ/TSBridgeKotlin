@@ -48,3 +48,6 @@ query.findObjects(object : FindListener<User>(){...}) 不接收 null 参数，
 
 16、Class<T> class 作为参数时，在 Java 中为 ClassName.class，而在 Kotlin 中是 ClassName::class.java，
 在 LoginFragmnet 中获取 User 信息时用到了，var user = BmobUser.getCurrentUser(User::class.java)；
+
+17、暂时将工具栏去除，等以后需要在上面添加功能按键时再加回，
+相应地，将各种配色改为浅灰；

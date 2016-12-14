@@ -18,13 +18,14 @@
     <color name="bulletinTime">#CC000000</color>
     <color name="bulletinContent">#FF000000</color>
 
-    <color name="bulletinDivider">#FF5BBD72</color>
+    <color name="bulletinDivider">#FFE0E0E0</color>
 
     <color name="sendBg">#FFFFFFFF</color>
     <color name="sendTitle">#FF000000</color>
-    <color name="mSendContent">#8A000000</color>
+    <color name="sendContent">#8A000000</color>
 
-    <color name="btn_pressed">#FF5B8872</color>
-    <color name="btn_normal">#FF5BBD72</color>
+    <color name="btn_pressed">#FFA0E0E0</color>
+    <color name="btn_normal">#FFE0E0E0</color>
+    <color name="btn_text">#FF000000</color>
 
 </resources>
