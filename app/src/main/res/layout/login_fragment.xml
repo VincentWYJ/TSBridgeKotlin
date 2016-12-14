@@ -39,6 +39,7 @@
     <Button android:id="@+id/login_image_sel"
         style="@style/SendButton"
         android:layout_below="@id/login_psw"
+        android:layout_marginTop="@dimen/login_btn_top"
         android:text="@string/login_image" />
 
     <com.tsbridge.view.CircleImageView  android:id="@+id/login_image"

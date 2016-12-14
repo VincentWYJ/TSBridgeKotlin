@@ -43,3 +43,8 @@
 14、Utils setImageToView 方法在没有网络的情况下会异常，
 query.findObjects(object : FindListener<User>(){...}) 不接收 null 参数，
 所以在准备加载图片之前需要进行网络判断；
+
+15、更正命名空格部分，变量定义时前无后一，类继承时冒号前后均一；
+
+16、Class<T> class 作为参数时，在 Java 中为 ClassName.class，而在 Kotlin 中是 ClassName::class.java，
+在 LoginFragmnet 中获取 User 信息时用到了，var user = BmobUser.getCurrentUser(User::class.java)；

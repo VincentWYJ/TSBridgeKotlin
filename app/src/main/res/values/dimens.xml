@@ -28,5 +28,6 @@
     <dimen name="btn_image">10dp</dimen>
     <dimen name="btn_margin">2dp</dimen>
     <dimen name="text_padding">5dp</dimen>
+    <dimen name="login_btn_top">45dp</dimen>
 
 </resources>
