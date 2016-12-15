@@ -9,11 +9,12 @@
         android:id="@+id/tabLayout"
         android:layout_width="match_parent"
         android:layout_height="@dimen/tabLayout_height"
-        android:background="@color/tabLayoutBg"
+        android:background="@color/primary"
         app:tabMode="fixed"
-        app:tabIndicatorColor="@color/tabLayoutCursor"
-        app:tabSelectedTextColor="@color/tabLayoutSelected"
-        app:tabTextColor="@color/tabLayoutNormal" />
+        app:tabIndicatorColor="@color/primaryDark"
+        app:tabSelectedTextColor="@color/grey"
+        app:tabTextColor="@color/primaryDark"
+        app:tabIndicatorHeight="2dp"/>
 
     <android.support.v4.view.ViewPager
         android:id="@+id/viewPager"

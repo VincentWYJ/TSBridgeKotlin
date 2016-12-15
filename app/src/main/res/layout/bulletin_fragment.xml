@@ -4,7 +4,7 @@
     android:id="@+id/bulletin_refresh"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/bulletinBg">
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,15 +15,13 @@
             android:id="@+id/bulletin_empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/bulletinBg"
             android:text="@string/bulletin_empty"
             android:gravity="center" />
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/bulletin_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/bulletinBg" />
+            android:layout_height="match_parent" />
 
     </LinearLayout>
 

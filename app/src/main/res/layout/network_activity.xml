@@ -3,7 +3,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:gravity="center"
-	android:background="@color/sendBg">
+	android:background="@color/white">
 
 	<TextView
 		android:id="@+id/network_title"
@@ -17,7 +17,7 @@
 		android:layout_marginTop="@dimen/send_title"
         android:gravity="center"
 		android:layout_below="@id/network_title"
-        android:textColor="@color/sendContent"
+        android:textColor="@color/primaryDark"
         android:textSize="@dimen/send_content"
 		android:text="@string/network_explain"/>
 

@@ -136,16 +136,17 @@ class BulletinFragment : Fragment() {
                 if (e == null) {
                     Utils.showLog("查询成功: 共" + `object`.size + "条Bulletin数据")
 
-                    `object`.map {
-                        var bulletinT = ReceiveBulletin(it.teacherName,
-                                it.updatedAt,
-                                it.bulletinContent,
-                                it.bulletinImage?.fileUrl)
-                        if (mIsRefreshingFromPullDown)
-                            mBulletins.add(0, bulletinT)
-                        else
-                            mBulletins.add(bulletinT)
-                    }
+                    if (`object`.size > 0)
+                        `object`.map {
+                            var bulletinT = ReceiveBulletin(it.teacherName,
+                                    it.updatedAt,
+                                    it.bulletinContent,
+                                    it.bulletinImage?.fileUrl)
+                            if (mIsRefreshingFromPullDown)
+                                mBulletins.add(0, bulletinT)
+                            else
+                                mBulletins.add(bulletinT)
+                        }
                     if (mBulletins.size > mBulletinCount) {
                         mBulletinCount = mBulletins.size
                         mBulletinAdapter?.notifyDataSetChanged()

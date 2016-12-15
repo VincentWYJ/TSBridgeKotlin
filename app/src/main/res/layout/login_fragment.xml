@@ -4,7 +4,7 @@
     android:id="@+id/send_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/sendBg"
+    android:background="@color/white"
     android:paddingTop="@dimen/send_padding">
 
     <TextView android:id="@+id/login_name_t"
@@ -47,8 +47,8 @@
         android:layout_below="@id/login_image_sel"
         android:layout_marginTop="@dimen/btn_image"
         android:layout_centerHorizontal="true"
-        app:circle_border_color="#ff0000"
-        app:circle_border_width="5dp" />
+        app:circle_border_color="@color/accent"
+        app:circle_border_width="@dimen/circle_bolder" />
 
     <LinearLayout
         android:layout_width="match_parent"

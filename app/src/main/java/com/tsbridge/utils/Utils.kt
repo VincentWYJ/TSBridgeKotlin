@@ -65,7 +65,7 @@ object Utils {
                                     .load(`object`[0].imageFile?.fileUrl)
                                     .into(imageview)
                         else
-                            showLog("用户$username?不存在了")
+                            showLog("用户'$username'不存在了")
                     } else
                         showLog("失败: " + e.message + "," + e.errorCode)
                 }

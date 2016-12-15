@@ -1,31 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <color name="transparent">#00000000</color>
 
-    <color name="primary">#FF5BBD72</color>
-    <color name="primaryDark">#FF22BD72</color>
-    <color name="accent">#FF22BD72</color>
+    <color name="primary">#FFE0E0E0</color>
+    <color name="primaryDark">#FFA0A0A0</color>
+    <color name="accent">#FFA0A0A0</color>
 
-    <color name="toolBarText">#FFFFFFFF</color>
-
-    <color name="tabLayoutBg">#FFE0E0E0</color>
-    <color name="tabLayoutCursor">#FF5BBD72</color>
-    <color name="tabLayoutSelected">#FF000000</color>
-    <color name="tabLayoutNormal">#8A000000</color>
-
-    <color name="bulletinBg">#FFFFFFFF</color>
-    <color name="bulletinName">#FF000000</color>
-    <color name="bulletinTime">#CC000000</color>
-    <color name="bulletinContent">#FF000000</color>
-
-    <color name="bulletinDivider">#FFE0E0E0</color>
-
-    <color name="sendBg">#FFFFFFFF</color>
-    <color name="sendTitle">#FF000000</color>
-    <color name="sendContent">#8A000000</color>
-
-    <color name="btn_pressed">#FFA0E0E0</color>
-    <color name="btn_normal">#FFE0E0E0</color>
-    <color name="btn_text">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="grey">#A8000000</color>
+    <color name="black">#FF000000</color>
 
 </resources>

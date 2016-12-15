@@ -3,7 +3,7 @@
 	android:layout_width="match_parent"
 	android:layout_height="match_parent"
 	android:gravity="center"
-	android:background="@color/sendBg">
+	android:background="@color/white">
 
 	<TextView
 		android:id="@+id/permission_title"
@@ -17,7 +17,7 @@
 		android:gravity="center"
 		android:layout_below="@id/permission_title"
 		android:layout_marginTop="20dp"
-		android:textColor="@color/sendContent"
+		android:textColor="@color/primaryDark"
 		android:textSize="@dimen/send_content" />
 
 	<Button

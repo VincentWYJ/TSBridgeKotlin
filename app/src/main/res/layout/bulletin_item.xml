@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/bulletinBg"
-    android:elevation="5dp"
+    android:background="@color/white"
+    android:elevation="2dp"
     android:padding="@dimen/bulletin_padding">
 
     <com.tsbridge.view.CircleImageView  android:id="@+id/bulletin_image"
         android:layout_width="@dimen/bulletin_image"
         android:layout_height="@dimen/bulletin_image"
         android:src="@drawable/black"
-        app:circle_border_color="#ff0000"
+        app:circle_border_color="@color/accent"
         app:circle_border_width="0dp" />
 
     <TextView android:id="@+id/bulletin_name"
@@ -21,7 +21,7 @@
         android:layout_alignTop="@id/bulletin_image"
         android:layout_marginStart="@dimen/image_name"
         android:textSize="@dimen/bulletin_name"
-        android:textColor="@color/bulletinName" />
+        android:textColor="@color/grey" />
 
     <TextView android:id="@+id/bulletin_time"
         android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
         android:layout_alignBottom="@id/bulletin_image"
         android:layout_marginTop="@dimen/name_time"
         android:textSize="@dimen/bulletin_time"
-        android:textColor="@color/bulletinTime" />
+        android:textColor="@color/primaryDark" />
 
     <ImageView android:id="@+id/bulletin_content_image"
         android:layout_width="@dimen/bulletin_content_image"
@@ -45,7 +45,7 @@
         android:layout_below="@id/bulletin_image"
         android:layout_marginTop="@dimen/image_content"
         android:textSize="@dimen/bulletin_content"
-        android:textColor="@color/bulletinContent" />
+        android:textColor="@color/grey" />
 
     <View
         android:id="@+id/bulletin_divider"
@@ -53,6 +53,6 @@
         android:layout_height="@dimen/bulletin_divider"
         android:layout_below="@id/bulletin_content"
         android:layout_marginTop="@dimen/name_time"
-        android:background="@color/bulletinDivider" />
+        android:background="@color/accent" />
 
 </RelativeLayout>

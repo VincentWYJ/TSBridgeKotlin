@@ -1,14 +1,20 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primaryDark</item>
+        <item name="colorAccent">@color/accent</item>
+    </style>
+
+    <style name="AppTheme1" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/primary</item>
         <item name="colorPrimaryDark">@color/primaryDark</item>
         <item name="colorAccent">@color/accent</item>
     </style>
 
-    <style name="AppTheme.NoActionBar">
+    <style name="AppTheme1.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
@@ -23,7 +29,7 @@
         <item name="android:gravity">start</item>
         <item name="android:layout_marginStart">@dimen/text_padding</item>
         <item name="android:layout_marginEnd">@dimen/text_padding</item>
-        <item name="android:textColor">@color/sendTitle</item>
+        <item name="android:textColor">@color/grey</item>
         <item name="android:textSize">@dimen/send_title</item>
     </style>
 
@@ -33,7 +39,7 @@
         <item name="android:gravity">start</item>
         <item name="android:layout_marginStart">@dimen/text_padding</item>
         <item name="android:layout_marginEnd">@dimen/text_padding</item>
-        <item name="android:textColor">@color/sendContent</item>
+        <item name="android:textColor">@color/grey</item>
         <item name="android:textSize">@dimen/send_content</item>
         <item name="android:layout_marginTop">@dimen/text_padding</item>
         <item name="android:padding">@dimen/text_padding</item>
@@ -46,9 +52,10 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:gravity">center</item>
         <item name="android:layout_marginTop">@dimen/send_item_margin</item>
-        <item name="android:textColor">@color/btn_text</item>
+        <item name="android:textColor">@color/grey</item>
         <item name="android:textSize">@dimen/send_title</item>
         <item name="android:background">@drawable/button_bg</item>
+        <item name="android:buttonStyle">?android:attr/borderlessButtonStyle</item>
     </style>
 
     <style name="DialogNoTitle" parent="@android:style/Theme.Dialog">
