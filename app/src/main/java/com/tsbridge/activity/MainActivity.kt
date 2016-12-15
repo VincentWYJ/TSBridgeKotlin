@@ -40,6 +40,33 @@ class MainActivity : AppCompatActivity() {
             viewPager.currentItem = 2
     }
 
+    override fun onRestart() {
+        super.onRestart()
+        Utils.showLog("MainActivity onRestart")
+    }
+
+    /** Broadcast 注册与取消一般放在 onStart-onStop */
+    override fun onStart() {
+        super.onStart()
+        Utils.showLog("MainActivity onStart")
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Utils.showLog("MainActivity onResume")
+    }
+
+    /** 简单数据存储一般放在 onPause，切记不能做耗时操作 */
+    override fun onPause() {
+        super.onPause()
+        Utils.showLog("MainActivity onPause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Utils.showLog("MainActivity onStop")
+    }
+
     override fun onDestroy() {
         super.onDestroy()
         Utils.showLog("MainActivity onDestroy")

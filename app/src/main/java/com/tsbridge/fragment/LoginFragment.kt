@@ -355,7 +355,7 @@ class LoginFragment : Fragment(), View.OnClickListener {
             var storagePermission = Utils.checkPermission(activity,
                     Utils.EXTERNAL_STORAGE_PERMISSION)
             if (storagePermission == PackageManager.PERMISSION_GRANTED)
-                loginReg()
+                selectImage()
             else {
                 Utils.showLog("Storage permission access failed")
                 Utils.showToast(activity, activity.getString(R.string.permission_denied))
