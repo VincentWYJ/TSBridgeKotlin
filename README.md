@@ -51,3 +51,5 @@ query.findObjects(object : FindListener<User>(){...}) 不接收 null 参数，
 
 17、暂时将工具栏去除，等以后需要在上面添加功能按键时再加回，
 相应地，将各种配色改为浅灰；
+
+18、将 Tablayout Text 字体由默认改为 20dp，与标题及按钮一致；

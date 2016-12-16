@@ -23,6 +23,10 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">@dimen/send_title</item>
+    </style>
+
     <style name="SendTitle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
@@ -44,7 +48,8 @@
         <item name="android:layout_marginTop">@dimen/text_padding</item>
         <item name="android:padding">@dimen/text_padding</item>
         <item name="android:background">@drawable/edittext_bg</item>
-        <item name="android:inputType">textNoSuggestions</item>
+        <item name="android:inputType">textMultiLine|textNoSuggestions</item>
+        <item name="android:singleLine">false</item>
     </style>
 
     <style name="SendButton">
